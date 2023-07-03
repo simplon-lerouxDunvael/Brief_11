@@ -1,53 +1,42 @@
 # Scrum.md 
 
-Lundi 05/06/23  
+Lundi 03/07/23  
 Objectifs :
 
-* Déployer l'infrastructure avec TLS
-* Commencer la doc
+* Rechercher la doc
+* Déployer le RG et le cluster AKS
 
-Mardi 06/06/23  
+Mardi 04/07/23  
 Résultats de la veille :
 
-* infrastructure avec TLS déployée
-* Doc commencée
-* Pipeline créée même si pas besoin
-
-Objectifs :
-
-* Déployer Grafana, Prometheus et Loki
-
-Mercredi 07/06/23 
-Résultats de la veille :
-
-* Grafana, Prometheus deployés
-* Connexion faite à Grafana et Prometheus
+* 
 
 Objectifs :
 
-* Finir de déployer Loki
-* Configurer les outils de supervision
-* Terminer le brief
+* 
 
-Jeudi 08/06/23  
+Mercredi 05/07/23  
 Résultats de la veille :
 
-* Loki déployé
-* Grafana dashboards choisi
+* 
 
 Objectifs :
 
-* Faire la rotation des dashboards
-* Métrics et alertes notamment sur slack
-* Terminer le brief
+* 
 
-Vendredi 09/06/23  
+Jeudi 06/07/23  
 Résultats de la veille :
 
-* Alertes faites
-* Rotation dashboards faite
-* Brief terminé
-* SMTP techniquement configuré
+* 
+
+Objectifs :
+
+* 
+
+Vendredi 07/07/23  
+Résultats de la veille :
+
+* 
 
 Objectifs :
 
