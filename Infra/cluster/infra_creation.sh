@@ -50,7 +50,7 @@ echo "Treafik authentication secret created."
 
 # Create Redis database and Treafik secrets
 echo "Creating Redis database and Treafik secrets..."
-kubectl apply -f azure-vote.yaml -n dev
+kubectl apply -f azure-vote1.yaml -n dev
 echo "Redis database and Treafik secrets created."
 
 # Install Treafik Ingress Controller
@@ -84,6 +84,11 @@ echo "Alright, let's steam ahead !"
 #     # do nothing
 #     :
 # fi
+
+# # Configure Treafik as reverse proxy for the voting app
+# echo "Let's configure Treafik as reverse proxy"
+# kubectl apply -f azure-vote2.yaml -n dev
+# echo "Treafik is now configured as reverse proxy for the Voting app."
 
 # # Add Jetstack Helm repository
 # echo "Adding Jetstack Helm repository..."
