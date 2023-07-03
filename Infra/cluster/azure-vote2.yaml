@@ -44,13 +44,16 @@ spec:
         ports:
         - containerPort: 6379
           name: redis
+
 ---
 # Service for Redis (Cluster IP)
 apiVersion: v1
 kind: Service
 metadata:
   name: redis-service
-spec: # Par default le type est ClusterIP, il n'y a aucun raison de le spécifier (type: ClusterIP)
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
   ports:
   - port: 6379
   selector:
@@ -104,6 +107,9 @@ spec:
             secretKeyRef:
               name: basicAuth-treafik-secret
               key: password
+      # Add annotations for Traefik
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: web
 
 ---
 # App Service
@@ -111,6 +117,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: vote-service
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
   type: ClusterIP
   ports:
