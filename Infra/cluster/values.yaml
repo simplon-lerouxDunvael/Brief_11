@@ -1,0 +1,24 @@
+# values.yaml
+ports:
+  web:
+    expose: true
+service:
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true" # For internal load balancer (optional)
+
+# Configuration des middlewares
+middlewares:
+  my-auth:
+    basicAuth:
+      users:
+        - "votre_utilisateur:$apr1$votre_mot_de_passe$"
+
+# Configuration des règles d'IPSource
+routers:
+  my-router:
+    rule: "Host(`votre_domaine`) || (HostRegexp(`votre_domaine`, `{subdomain:[a-z]+}.votre_domaine`) && IPWhiteList(`192.168.1.0/24`, `10.0.0.0/8`))"
+    middlewares:
+      - name: my-auth
+    service: votre_service
+    entryPoints:
+      - web
