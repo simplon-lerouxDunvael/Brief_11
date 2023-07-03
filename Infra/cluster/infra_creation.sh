@@ -40,12 +40,12 @@ echo "Namespaces created"
 
 # Create Redis database secret
 echo "Creating Redis database secret for namespace dev..."
-kubectl create secret generic redis-secret-duna --from-literal=username=$redusrtreafik --from-literal=password=$redpasstreafik -n dev
+kubectl create secret generic redis-secret-treafik --from-literal=username=$redusrtreafik --from-literal=password=$redpasstreafik -n dev
 echo "Redis database secret created."
 
 # Create Treafik authentication secret
 echo "Creating Treafik authentication secret for namespace dev..."
-kubectl create secret generic BasicAuth-treafik-secret --from-literal=username=$BasicAuthuser --from-literal=password=$BasicAuthpass -n dev
+kubectl create secret generic basicAuth-treafik-secret --from-literal=username=$BasicAuthuser --from-literal=password=$BasicAuthpass -n dev
 echo "Treafik authentication secret created."
 
 # Create Redis database and Treafik secrets
@@ -65,25 +65,25 @@ echo "Let's take 5 to let Treafik settle in..."
 sleep 30s
 echo "Alright, let's steam ahead !"
 
-# Extract External IP address
-DevIngIP=$(kubectl get svc treafik-dev-treafik-ingress-controller -n dev -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
-echo "Treafik (dev) Ingress: $DevIngIP"
+# # Extract External IP address
+# DevIngIP=$(kubectl get svc treafik-dev-treafik-ingress-controller -n dev -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
+# echo "Treafik (dev) Ingress: $DevIngIP"
 
-# Insert a pause in the script so that users can report IP to DNS
-read -n1 -r -p "Press Y to continue, or N to stop: " key
+# # Insert a pause in the script so that users can report IP to DNS
+# read -n1 -r -p "Press Y to continue, or N to stop: " key
 
-echo
+# echo
 
-if [ "$key" = 'Y' ] || [ "$key" = 'y' ]; then
-    echo "Continuing..."
-    # your code to execute if user presses Y goes here
-elif [ "$key" = 'N' ] || [ "$key" = 'n' ]; then
-    echo "Stopping..."
-    exit 1
-else
-    # do nothing
-    :
-fi
+# if [ "$key" = 'Y' ] || [ "$key" = 'y' ]; then
+#     echo "Continuing..."
+#     # your code to execute if user presses Y goes here
+# elif [ "$key" = 'N' ] || [ "$key" = 'n' ]; then
+#     echo "Stopping..."
+#     exit 1
+# else
+#     # do nothing
+#     :
+# fi
 
 # # Add Jetstack Helm repository
 # echo "Adding Jetstack Helm repository..."
