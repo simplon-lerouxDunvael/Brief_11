@@ -65,30 +65,25 @@ echo "Let's take 5 to let Treafik settle in..."
 sleep 30s
 echo "Alright, let's steam ahead !"
 
-# # Extract External IP address
-# DevIngIP=$(kubectl get svc treafik-dev-treafik-ingress-controller -n dev -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
-# echo "Treafik (dev) Ingress: $DevIngIP"
+# Extract External IP address
+DevIngIP=$(kubectl get svc treafik-dev-traefik -n dev -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
+echo "Treafik (dev) Ingress: $DevIngIP"
 
-# # Insert a pause in the script so that users can report IP to DNS
-# read -n1 -r -p "Press Y to continue, or N to stop: " key
+# Insert a pause in the script so that users can report IP to DNS
+read -n1 -r -p "Press Y to continue, or N to stop: " key
 
-# echo
+echo
 
-# if [ "$key" = 'Y' ] || [ "$key" = 'y' ]; then
-#     echo "Continuing..."
-#     # your code to execute if user presses Y goes here
-# elif [ "$key" = 'N' ] || [ "$key" = 'n' ]; then
-#     echo "Stopping..."
-#     exit 1
-# else
-#     # do nothing
-#     :
-# fi
-
-# # Configure Treafik as reverse proxy for the voting app
-# echo "Let's configure Treafik as reverse proxy"
-# kubectl apply -f azure-vote2.yaml -n dev
-# echo "Treafik is now configured as reverse proxy for the Voting app."
+if [ "$key" = 'Y' ] || [ "$key" = 'y' ]; then
+    echo "Continuing..."
+    # your code to execute if user presses Y goes here
+elif [ "$key" = 'N' ] || [ "$key" = 'n' ]; then
+    echo "Stopping..."
+    exit 1
+else
+    # do nothing
+    :
+fi
 
 # # Add Jetstack Helm repository
 # echo "Adding Jetstack Helm repository..."
