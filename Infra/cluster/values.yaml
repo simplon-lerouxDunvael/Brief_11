@@ -1,4 +1,3 @@
-# values.yaml
 ports:
   web:
     expose: true
@@ -11,14 +10,14 @@ middlewares:
   my-auth:
     basicAuth:
       users:
-        - "votre_utilisateur:$apr1$votre_mot_de_passe$"
+        - "devusertreafik:$apr1$password_basicauth_648$"
 
 # Configuration des règles d'IPSource
 routers:
   my-router:
-    rule: "Host(`votre_domaine`) || (HostRegexp(`votre_domaine`, `{subdomain:[a-z]+}.votre_domaine`) && IPWhiteList(`192.168.1.0/24`, `10.0.0.0/8`))"
+    rule: "Host(`smoothie-treafik.simplon-duna.space`) || (HostRegexp(`smoothie-treafik.simplon-duna.space`, `{subdomain:[a-z]+}.smoothie-treafik.simplon-duna.space`) && IPWhiteList(`192.168.1.0/24`, `10.0.0.0/8`))"
     middlewares:
       - name: my-auth
-    service: votre_service
+    service: vote-service # Le nom du service de la voting-app
     entryPoints:
       - web
