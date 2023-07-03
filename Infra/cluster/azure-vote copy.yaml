@@ -32,7 +32,7 @@ spec:
         - name: REDIS_PWD
           valueFrom:
             secretKeyRef:
-              name: redis-secret-treafik
+              name: redis-secret-duna
               key: password
         resources:
           requests:
@@ -55,7 +55,6 @@ spec: # Par default le type est ClusterIP, il n'y a aucun raison de le spécifie
   - port: 6379
   selector:
     app: redis-azure
-
 ---
 # Deployment of Voting App
 apiVersion: apps/v1
@@ -92,17 +91,7 @@ spec:
         - name: REDIS_PWD
           valueFrom:
             secretKeyRef:
-              name: redis-secret-treafik
-              key: password
-        - name: BASIC_AUTH_USER
-          valueFrom:
-            secretKeyRef:
-              name: basicAuth-treafik-secret
-              key: username
-        - name: BASIC_AUTH_PASS
-          valueFrom:
-            secretKeyRef:
-              name: basicAuth-treafik-secret
+              name: redis-secret-duna
               key: password
 
 ---
