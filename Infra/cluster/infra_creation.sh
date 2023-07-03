@@ -4,16 +4,13 @@
 rgname="b11duna"
 aksname="AKSClusterDuna"
 rgloc="francecentral"
-# redusrqua="devuserqua"
-# redpassqua="password_redis_154"
-# redusrprod="devuserprod"
-# redpassprod="password_redis_265"
 redusrtreafik="devusertreafik"
 redpasstreafik="password_redis_519"
+BasicAuthuser="devusertreafik"
+BasicAuthpass="password_basicauth_648"
 apitoken="xKAj86qFn5Tj6WH5T2rENi4B"
 certvers="v1.10.1"
-IngQua="nginx-qua"
-IngProd="nginx-prod"
+IngTreafik="treafik-dev"
 
 
 # Create resource group
@@ -36,64 +33,57 @@ echo "Installing K9s..."
 curl -sS https://webinstall.dev/k9s | bash
 echo "The watchdog is here."
 
-# Create Prod & Qua namespaces
-echo "Creating Prod & Qua namespaces for QAL & Public deploy"
-kubectl create namespace treafik
-# kubectl create namespace qua
-# kubectl create namespace prod
+# Create Dev namespace
+echo "Creating Prod namespace for Treafik and voting-app..."
+kubectl create namespace dev
 echo "Namespaces created"
 
 # Create Redis database secret
-echo "Creating Redis database secret for namespace treafik..."
-kubectl create secret generic redis-secret-duna --from-literal=username=$redusrtreafik --from-literal=password=$redpasstreafik -n prod
+echo "Creating Redis database secret for namespace dev..."
+kubectl create secret generic redis-secret-duna --from-literal=username=$redusrtreafik --from-literal=password=$redpasstreafik -n dev
 echo "Redis database secret created."
-# echo "Creating Redis database secret for namespace qua..."
-# kubectl create secret generic redis-secret-duna --from-literal=username=$redusrqua --from-literal=password=$redpassqua -n qua
-# echo "Redis database secret created."
-# echo "Creating Redis database secret for namespace prod..."
-# kubectl create secret generic redis-secret-duna --from-literal=username=$redusrprod --from-literal=password=$redpassprod -n prod
-# echo "Redis database secret created."
 
-# Create Redis database secret
-# echo "Creating Redis database secret..."
-# kubectl apply -f azure-vote.yaml -n qua
-# kubectl apply -f azure-vote.yaml -n prod
-# echo "Redis database secret created."
+# Create Treafik authentication secret
+echo "Creating Treafik authentication secret for namespace dev..."
+kubectl create secret generic BasicAuth-treafik-secret --from-literal=username=$BasicAuthuser --from-literal=password=$BasicAuthpass -n dev
+echo "Treafik authentication secret created."
 
-# # Install NGINX Ingress Controller
-# echo "Installing NGINX Ingress Controller..."
-# helm repo add nginx-stable https://helm.nginx.com/stable
-# helm repo update
-# helm install $IngQua nginx-stable/nginx-ingress --create-namespace -n qua --debug --set controller.ingressClass="$IngQua"
-# helm install $IngProd nginx-stable/nginx-ingress --create-namespace -n prod --debug --set controller.ingressClass="$IngProd"
-# echo "NGINX Ingress Controller installed."
+# Create Redis database and Treafik secrets
+echo "Creating Redis database and Treafik secrets..."
+kubectl apply -f azure-vote.yaml -n dev
+echo "Redis database and Treafik secrets created."
 
-# # Break time for Nginx to initialize
-# echo "Let's take 5 to let Nginx settle in..."
-# sleep 30s
-# echo "Alright, let's steam ahead !"
+# Install Treafik Ingress Controller
+echo "Installing Treafik Ingress Controller..."
+helm repo add traefik https://helm.traefik.io/traefik
+helm repo update
+helm install $IngTreafik traefik/traefik -f values.yaml -n dev --debug --set controller.ingressClass="$IngTreafik"
+echo "Treakif Ingress Controller installed."
 
-# # Extract External IP address
-# QuaIngIP=$(kubectl get svc nginx-qua-nginx-ingress-controller -n qua -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
-# ProdIngIP=$(kubectl get svc nginx-prod-nginx-ingress-controller -n prod -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
-# echo "QUA Ingress: $QuaIngIP"
-# echo "Prod Ingress: $ProdIngIP"
+# Break time for Treafik to initialize
+echo "Let's take 5 to let Treafik settle in..."
+sleep 30s
+echo "Alright, let's steam ahead !"
 
-# # Insert a pause in the script so that users can report IP to DNS
-# read -n1 -r -p "Press Y to continue, or N to stop: " key
+# Extract External IP address
+DevIngIP=$(kubectl get svc treafik-dev-treafik-ingress-controller -n dev -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
+echo "Treafik (dev) Ingress: $DevIngIP"
 
-# echo
+# Insert a pause in the script so that users can report IP to DNS
+read -n1 -r -p "Press Y to continue, or N to stop: " key
 
-# if [ "$key" = 'Y' ] || [ "$key" = 'y' ]; then
-#     echo "Continuing..."
-#     # your code to execute if user presses Y goes here
-# elif [ "$key" = 'N' ] || [ "$key" = 'n' ]; then
-#     echo "Stopping..."
-#     exit 1
-# else
-#     # do nothing
-#     :
-# fi
+echo
+
+if [ "$key" = 'Y' ] || [ "$key" = 'y' ]; then
+    echo "Continuing..."
+    # your code to execute if user presses Y goes here
+elif [ "$key" = 'N' ] || [ "$key" = 'n' ]; then
+    echo "Stopping..."
+    exit 1
+else
+    # do nothing
+    :
+fi
 
 # # Add Jetstack Helm repository
 # echo "Adding Jetstack Helm repository..."
