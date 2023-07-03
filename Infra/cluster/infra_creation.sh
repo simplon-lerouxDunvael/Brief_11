@@ -50,7 +50,7 @@ echo "Treafik authentication secret created."
 
 # Create Redis database and Treafik secrets
 echo "Creating Redis database and Treafik secrets..."
-kubectl apply -f azure-vote1.yaml -n dev
+kubectl apply -f azure-vote.yaml -n dev
 echo "Redis database and Treafik secrets created."
 
 # Install Treafik Ingress Controller
