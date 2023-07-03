@@ -1,0 +1,14 @@
+# Cert Manager
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name:  smoothiemoni.simplon-duna.space
+spec:
+  dnsNames:
+  - smoothie-prometheus.simplon-duna.space
+  - smoothie-grafana.simplon-duna.space
+  - smoothie-loki.simplon-duna.space
+  issuerRef:
+    name: letsencrypt
+    kind: Issuer
+  secretName: secret-tlsmoni
