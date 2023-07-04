@@ -4,14 +4,14 @@ kind: IngressRoute
 metadata:
   name: votingapp
   annotations:
-    treafik.ingress.kubernetes.io/rewrite-target: /
+    traefik.ingress.kubernetes.io/rewrite-target: /
     cert-manager.io/issuer: letsencrypt
     cert-manager.io/issuer-kind: Issuer
     cert-manager.io/issuer-group: cert-manager.io
 spec:
-  ingressClassName: treafik-dev
+  ingressClassName: traefik-dev
   rules:
-  - host: smoothie-treafik.simplon-duna.space
+  - host: smoothie-traefik.simplon-duna.space
     http:
       paths:
       - path: /
@@ -23,5 +23,5 @@ spec:
               number: 80
   tls: # placing a host in the TLS config will determine what ends up in the cert's subjectAlt
   - hosts:
-    - smoothie-treafik.simplon-duna.space
+    - smoothie-traefik.simplon-duna.space
     secretName: secret-tls # cert-manager will store the created certificate in this secret.
