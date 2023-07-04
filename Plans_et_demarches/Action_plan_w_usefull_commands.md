@@ -81,6 +81,12 @@ After checking the services and pods, Treafik is running however I can't connect
 
 ![2023-07-03_no_connection_to_dns](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/932a40bf-9f56-404c-bc0a-196195815ea3)
 
+After checking my deployments `kubectl get deployments -n dev`, I noticed that the Azure Voting-app was not deployed. I tried to manually deploy the file and had an error message saying that my Treafik secret did not respect the syntax. It has to be in lowercase only and cannot have any uppercase (it had one). So I updated my secret's name and my azure-vote.yaml file.
+
+![2023-07-04 10h20_error_message_unvalid_secret_name](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/cfe54fb2-5bcf-4939-94b8-4c9a0163cb39)
+
+Then I deleted all the deployments, services, secrets, pods and persistent volumes to redeploy everything.
+
 [&#8679;](#top)
 
 <div id=''/>  
