@@ -69,67 +69,75 @@ To get out of the graphic interface, I just clicked on `Ctrl + C`.
 
 ![k9s-2](https://github.com/simplon-lerouxDunvael/Brief_10/assets/108001918/59a34173-8d39-41f9-addc-08bfe89d693b)
 
-After deploying my script, Treafik was installed. 
+After deploying my script, traefik was installed. 
 
 ![2023-07-03_svc_deployed](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/76538b64-32ee-420c-9c6f-b3fdaf70b6e4)
 
-I created a DNS record to link it to Treafik IP address. 
+I created a DNS record to link it to traefik IP address. 
 
-![2023-07-03_dns_record-treafik](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/a6f6dc7e-553e-4b5c-81b1-f9310148072f)
+![2023-07-03_dns_record-traefik](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/a6f6dc7e-553e-4b5c-81b1-f9310148072f)
 
-After checking the services and pods, Treafik is running however I can't connect to the Voting-App with both the IP address and the DNS.
+After checking the services and pods, traefik is running however I can't connect to the Voting-App with both the IP address and the DNS.
 
 ![2023-07-03_no_connection_to_dns](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/932a40bf-9f56-404c-bc0a-196195815ea3)
 
-After checking my deployments `kubectl get deployments -n dev`, I noticed that the Azure Voting-app was not deployed. I tried to manually deploy the file and had an error message saying that my Treafik secret did not respect the syntax. It has to be in lowercase only and cannot have any uppercase (it had one). So I updated my secret's name and my azure-vote.yaml file.
+After checking my deployments `kubectl get deployments -n dev`, I noticed that the Azure Voting-app was not deployed. I tried to manually deploy the file and had an error message saying that my traefik secret did not respect the syntax. It has to be in lowercase only and cannot have any uppercase (it had one). So I updated my secret's name and my azure-vote.yaml file.
 
 ![2023-07-04 10h20_error_message_unvalid_secret_name](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/cfe54fb2-5bcf-4939-94b8-4c9a0163cb39)
 
 Then I deleted my cluster and RG and redeployed everything.
 
-However the result is the same. I ckecked the domain resolution with `nslookup smoothie-treafik.simplon-duna.space`.
+However the result is the same. I ckecked the domain resolution with `nslookup smoothie-traefik.simplon-duna.space`.
 
 ![2023-07-04 11h23_nslookup_working](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/7af4fa9a-f238-4b4d-bd18-0bc5152df93b)
 
-The output of the nslookup command shows that the domain "smoothie-treafik.simplon-duna.space" is successfully resolved and points to the internal IP address 10.224.0.6. This means that DNS resolution is working fine from where I ran the nslookup command.
+The output of the nslookup command shows that the domain "smoothie-traefik.simplon-duna.space" is successfully resolved and points to the internal IP address 10.224.0.6. This means that DNS resolution is working fine from where I ran the nslookup command.
 
-Then I checked treafik services `k describe svc treafik-dev-traefik -n dev` :
+Then I checked traefik services `k describe svc traefik-dev-traefik -n dev` :
 
-![2023-07-04 11h34_describe_treafik_svc](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/ac6fc464-56ab-411d-96cb-5d85167f82e7)
+![2023-07-04 11h34_describe_traefik_svc](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/ac6fc464-56ab-411d-96cb-5d85167f82e7)
 
-It seems that he Treafik service is currently configured for internal access only and is not accessible from the Internet. 
+It seems that he traefik service is currently configured for internal access only and is not accessible from the Internet. 
 
 To make the service accessible from the outside, I have to modify its configuration to put it in external (public) LoadBalancer mode and obtain an external public IP address.
 
-In order to do this, I need to check the configuration used when installing Treafik via Helm and ensure that the appropriate parameter for the type of service (LoadBalancer) is set to "External". I also consult the Helm and Treafik documentation to understand how to configure the type of LoadBalancer I want.
+In order to do this, I need to check the configuration used when installing traefik via Helm and ensure that the appropriate parameter for the type of service (LoadBalancer) is set to "External". I also consult the Helm and traefik documentation to understand how to configure the type of LoadBalancer I want.
 
 I also checked the ingress with `kubectl get ingress -n dev` :
 
 ![2023-07-04 11h49_no_ingress_found](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/7aba018d-5b15-4b7b-8e1f-7acf9eb6f66a)
 
-It seems that Treafik is not seen as an ingress.
-So I went to [Treafik doc](https://doc.traefik.io/traefik/routing/overview/).
+It seems that traefik is not seen as an ingress.
+So I went to [traefik doc](https://doc.traefik.io/traefik/routing/overview/).
 
-After checking all this, I went to my values.yaml Treafik configuration file and updated the annotation `service.beta.kubernetes.io/azure-load-balancer-internal` from "true" to "false". This way, the load balancer will be configured externally and will be accessible from outside the Kubernetes cluster.
+After checking all this, I went to my values.yaml traefik configuration file and updated the annotation `service.beta.kubernetes.io/azure-load-balancer-internal` from "true" to "false". This way, the load balancer will be configured externally and will be accessible from outside the Kubernetes cluster.
 
 ![2023-07-04 11h56_configure_LBinternal_false](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/8c66de22-f304-4a20-8c34-bb635298bfeb)
 
-In order to update Treafik's config, I need to update it with helm with its config file. As I used this command to install it with Helm `helm install treafik-dev traefik/traefik -f values.yaml -n dev --debug --set controller.ingressClass="treafik-dev"`, I used this command to upgrade it : 
+In order to update traefik's config, I need to update it with helm with its config file. As I used this command to install it with Helm `helm install traefik-dev traefik/traefik -f values.yaml -n dev --debug --set controller.ingressClass="traefik-dev"`, I used this command to upgrade it : 
 
 ```bash
-helm upgrade treafik-dev traefik/traefik -n dev -f values.yaml
+helm upgrade traefik-dev traefik/traefik -n dev -f values.yaml
 ```
 
-![2023-07-04 12h05_treafikconfig_upgraded_with_helm](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/2b249978-c4bb-4f7d-b3a9-3fed3f8b2eee)
+![2023-07-04 12h05_traefikconfig_upgraded_with_helm](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/2b249978-c4bb-4f7d-b3a9-3fed3f8b2eee)
 
-Then I checked treafik'services and it had a new external IP address. I updated my DNS record with it.
+Then I checked traefik'services and it had a new external IP address. I updated my DNS record with it.
 
-![2023-07-04 12h08_treafik_externalIP](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/e5017ff2-abd0-4e2b-a028-730c067cbc64)
+![2023-07-04 12h08_traefik_externalIP](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/e5017ff2-abd0-4e2b-a028-730c067cbc64)
 
 
-Then I tried to connect. I now have a 404 page error but it seems the issue is no more Treafik's configuration. It is now available externally.
+Then I tried to connect. I now have a 404 page error but it seems the issue is no more traefik's configuration. It is now available externally.
 
 ![2023-07-04 12h11_404error](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/df261e01-8dae-40f7-b025-51ba43d3c2a4)
+
+After checking with Joffrey, I found out that my values.yaml configuration file does not change anything to the 404 error. 
+
+*I went to this [doc](https://artifacthub.io/packages/helm/traefik/traefik) that refers the default parameters for traefik's configuration.*
+
+Therefore, I choose to follow Joffrey's advices and to provide another route with another port (used by traefik) to my voting app to see if this could solve the issue.
+
+
 
 [&#8679;](#top)
 
