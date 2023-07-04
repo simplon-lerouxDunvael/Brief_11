@@ -87,6 +87,12 @@ After checking my deployments `kubectl get deployments -n dev`, I noticed that t
 
 Then I deleted my cluster and RG and redeployed everything.
 
+However the result is the same. I ckecked the domain resolution with `nslookup smoothie-treafik.simplon-duna.space`.
+
+![2023-07-04 11h23_nslookup_working](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/7af4fa9a-f238-4b4d-bd18-0bc5152df93b)
+
+The output of the nslookup command shows that the domain "smoothie-treafik.simplon-duna.space" is successfully resolved and points to the internal IP address 10.224.0.6. This means that DNS resolution is working fine from where I ran the nslookup command.
+
 [&#8679;](#top)
 
 <div id=''/>  
