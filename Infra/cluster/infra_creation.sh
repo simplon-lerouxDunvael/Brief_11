@@ -6,8 +6,8 @@ aksname="AKSClusterDuna"
 rgloc="francecentral"
 redusrtreafik="devusertreafik"
 redpasstreafik="password_redis_519"
-BasicAuthuser="devusertreafik"
-BasicAuthpass="password_basicauth_648"
+basicauthuser="devusertreafik"
+basicauthpass="password_basicauth_648"
 apitoken="xKAj86qFn5Tj6WH5T2rENi4B"
 certvers="v1.10.1"
 IngTreafik="treafik-dev"
@@ -45,7 +45,7 @@ echo "Redis database secret created."
 
 # Create Treafik authentication secret
 echo "Creating Treafik authentication secret for namespace dev..."
-kubectl create secret generic basicAuth-treafik-secret --from-literal=username=$BasicAuthuser --from-literal=password=$BasicAuthpass -n dev
+kubectl create secret generic basicauth-treafik-secret --from-literal=username=$basicauthuser --from-literal=password=$basicauthpass -n dev
 echo "Treafik authentication secret created."
 
 # Create Redis database and Treafik secrets
