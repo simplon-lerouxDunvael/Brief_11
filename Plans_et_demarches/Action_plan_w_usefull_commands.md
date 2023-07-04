@@ -147,6 +147,9 @@ Then I updated the voting app service on my azure-vote.yaml file :
 * I added websecure to the annotations (entrypoints)
 * I added the HTTPS ports and the targetport that will be used by Traefik to direct trafic (wheither it is in HTTP or HTTPS). *As I already specified the targetport in the deployment of my azure voting app I do not need to add it.*
 
+
+I still have the 404 error after all these steps.
+
 [&#8679;](#top)
 
 <div id=''/>  
