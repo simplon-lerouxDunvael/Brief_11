@@ -93,6 +93,27 @@ However the result is the same. I ckecked the domain resolution with `nslookup s
 
 The output of the nslookup command shows that the domain "smoothie-treafik.simplon-duna.space" is successfully resolved and points to the internal IP address 10.224.0.6. This means that DNS resolution is working fine from where I ran the nslookup command.
 
+Then I checked treafik services `k describe svc treafik-dev-traefik -n dev` :
+
+![2023-07-04 11h34_describe_treafik_svc](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/ac6fc464-56ab-411d-96cb-5d85167f82e7)
+
+It seems that he Treafik service is currently configured for internal access only and is not accessible from the Internet. 
+
+To make the service accessible from the outside, I have to modify its configuration to put it in external (public) LoadBalancer mode and obtain an external public IP address.
+
+In order to do this, I need to check the configuration used when installing Treafik via Helm and ensure that the appropriate parameter for the type of service (LoadBalancer) is set to "External". I also consult the Helm and Treafik documentation to understand how to configure the type of LoadBalancer I want.
+
+I also checked the ingress with `kubectl get ingress -n dev` :
+
+![2023-07-04 11h49_no_ingress_found](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/7aba018d-5b15-4b7b-8e1f-7acf9eb6f66a)
+
+It seems that Treafik is not seen as an ingress.
+So I went to [Treafik doc](https://doc.traefik.io/traefik/routing/overview/).
+
+After checking all this, I went to my values.yaml Treafik configuration file and updated the annotation `service.beta.kubernetes.io/azure-load-balancer-internal` from "true" to "false". This way, the load balancer will be configured externally and will be accessible from outside the Kubernetes cluster.
+
+![2023-07-04 11h56_configure_LBinternal_false](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/8c66de22-f304-4a20-8c34-bb635298bfeb)
+
 [&#8679;](#top)
 
 <div id=''/>  
