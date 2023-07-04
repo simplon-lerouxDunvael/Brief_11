@@ -137,7 +137,15 @@ After checking with Joffrey, I found out that my values.yaml configuration file 
 
 Therefore, I choose to follow Joffrey's advices and to provide another route with another port (used by traefik) to my voting app to see if this could solve the issue.
 
+I updated Traefik config file values.yaml. I added routing rules :
 
+* one "whoami-http" to be able to connect in HTTP ad=nd configure an entrypoint for the azure voting-app (and smoothie-traefik.simplon-duna.space)
+* one "whoami-https" to be able to connect in HTTP and HTTPS when the TLS will be configured and to redirect all HTTP trafic to HTTPS
+
+Then I updated the voting app service on my azure-vote.yaml file :
+
+* I added websecure to the annotations (entrypoints)
+* I added the HTTPS ports and the targetport that will be used by Traefik to direct trafic (wheither it is in HTTP or HTTPS). *As I already specified the targetport in the deployment of my azure voting app I do not need to add it.*
 
 [&#8679;](#top)
 
