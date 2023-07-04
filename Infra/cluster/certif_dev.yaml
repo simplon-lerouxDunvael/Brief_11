@@ -2,11 +2,11 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: smoothie-qua.simplon-duna.space
+  name: smoothie-treafik.simplon-duna.space
 spec:
   dnsNames:
-  - smoothie-qua.simplon-duna.space
+  - smoothie-treafik.simplon-duna.space
   issuerRef:
     name: letsencrypt
     kind: Issuer
-  secretName: secret-tls-qua
+  secretName: secret-tls-dev
