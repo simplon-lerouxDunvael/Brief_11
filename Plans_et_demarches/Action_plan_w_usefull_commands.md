@@ -114,6 +114,17 @@ After checking all this, I went to my values.yaml Treafik configuration file and
 
 ![2023-07-04 11h56_configure_LBinternal_false](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/8c66de22-f304-4a20-8c34-bb635298bfeb)
 
+In order to update Treafik's config, I need to update it with helm with its config file. As I used this command to install it with Helm `helm install treafik-dev traefik/traefik -f values.yaml -n dev --debug --set controller.ingressClass="treafik-dev"`, I used this command to upgrade it : 
+
+```bash
+helm upgrade treafik-dev traefik/traefik -n dev -f values.yaml
+```
+
+![2023-07-04 12h05_treafikconfig_upgraded_with_helm](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/2b249978-c4bb-4f7d-b3a9-3fed3f8b2eee)
+
+
+
+
 [&#8679;](#top)
 
 <div id=''/>  
