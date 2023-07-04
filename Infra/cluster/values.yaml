@@ -28,13 +28,13 @@ http:
     whoami-http:
       rule: "Host(`smoothie-traefik.simplon-duna.space`)"
       service: vote-service # Remplacer par le nom du service approprié
-      entryPoints:
-        - http # Utiliser l'entrypoint http pour HTTP
+      # entryPoints:
+      #   - http # Utiliser l'entrypoint http pour HTTP
 
 # Permet de rediriger le trafic HTTP vers HTTPS une fois le TLS mis en place
 # Routeur "whoami-https" pour se connecter en HTTPS
     whoami-https:
       rule: "Host(`smoothie-traefik.simplon-duna.space`)"
       service: vote-service # Remplacer par le nom du service approprié
-      entryPoints:
-        - websecure # Utiliser l'entrypoint websecure pour HTTPS
+      # entryPoints:
+      #   - websecure # Utiliser l'entrypoint websecure pour HTTPS
