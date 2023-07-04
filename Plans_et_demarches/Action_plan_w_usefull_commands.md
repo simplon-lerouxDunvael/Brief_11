@@ -61,13 +61,25 @@ Researches and reading of documentations to determine the needed prerequisites, 
 
 ### **Creation of a resource group and deployment of Voting-App**
 
-I created a resource group and deployed the AKS cluster via the file script .sh (created beforehand). I also directly installed K9s in order to check logs. To connect to it, I opened a terminal and typed `k9s` and clicked `Enter`. 
+I created a resource group and deployed the AKS cluster via the file script .sh (created and updated beforehand). I also directly installed K9s in order to check logs. To connect to it, I opened a terminal and typed `k9s` and clicked `Enter`. 
 
 ![k9s](https://github.com/simplon-lerouxDunvael/Brief_10/assets/108001918/1494fbdc-d11c-488a-900e-4a047de71034)
 
 To get out of the graphic interface, I just clicked on `Ctrl + C`.
 
 ![k9s-2](https://github.com/simplon-lerouxDunvael/Brief_10/assets/108001918/59a34173-8d39-41f9-addc-08bfe89d693b)
+
+After deploying my script, Treafik was installed. 
+
+![2023-07-03_svc_deployed](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/76538b64-32ee-420c-9c6f-b3fdaf70b6e4)
+
+I created a DNS record to link it to Treafik IP address. 
+
+![2023-07-03_dns_record-treafik](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/a6f6dc7e-553e-4b5c-81b1-f9310148072f)
+
+After checking the services and pods, Treafik is running however I can't connect to the Voting-App with both the IP address and the DNS.
+
+![2023-07-03_no_connection_to_dns](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/932a40bf-9f56-404c-bc0a-196195815ea3)
 
 [&#8679;](#top)
 
