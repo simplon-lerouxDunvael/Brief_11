@@ -32,7 +32,7 @@ spec:
         - name: REDIS_PWD
           valueFrom:
             secretKeyRef:
-              name: redis-secret-treafik
+              name: redis-secret-traefik
               key: password
         resources:
           requests:
@@ -93,17 +93,17 @@ spec:
         - name: REDIS_PWD
           valueFrom:
             secretKeyRef:
-              name: redis-secret-treafik
+              name: redis-secret-traefik
               key: password
         - name: BASIC_AUTH_USER
           valueFrom:
             secretKeyRef:
-              name: basicauth-treafik-secret
+              name: basicauth-traefik-secret
               key: username
         - name: BASIC_AUTH_PASS
           valueFrom:
             secretKeyRef:
-              name: basicauth-treafik-secret
+              name: basicauth-traefik-secret
               key: password
 
 ---
