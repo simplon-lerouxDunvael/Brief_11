@@ -3,7 +3,7 @@ ports:
     expose: true
 service:
   annotations:
-    service.beta.kubernetes.io/azure-load-balancer-internal: "true" # For internal load balancer (optional)
+    service.beta.kubernetes.io/azure-load-balancer-internal: "false" # For internal load balancer (optional)
 
 # Configuration des middlewares
 middlewares:
