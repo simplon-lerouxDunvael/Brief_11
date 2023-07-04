@@ -21,3 +21,18 @@ routers:
     service: vote-service # Le nom du service de la voting-app
     entryPoints:
       - web
+
+# Routeur "whoami-http" pour se connecter en HTTP
+  whoami-http:
+    rule: "Host(`smoothie-traefik.simplon-duna.space`) && PathPrefix(`/whoami`)"
+    service: vote-service # Remplacer par le nom du service approprié
+    entryPoints:
+      - http # Utiliser l'entrypoint http pour HTTP
+
+# Permet de rediriger le trafic HTTP vers HTTPS une fois le TLS mis en place
+# Routeur "whoami-https" pour se connecter en HTTPS
+  whoami-https:
+    rule: "Host(`smoothie-traefik.simplon-duna.space`) && PathPrefix(`/whoami`)"
+    service: vote-service # Remplacer par le nom du service approprié
+    entryPoints:
+      - websecure # Utiliser l'entrypoint websecure pour HTTPS
