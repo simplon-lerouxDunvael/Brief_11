@@ -98,12 +98,12 @@ spec:
         - name: BASIC_AUTH_USER
           valueFrom:
             secretKeyRef:
-              name: basicAuth-treafik-secret
+              name: basicauth-treafik-secret
               key: username
         - name: BASIC_AUTH_PASS
           valueFrom:
             secretKeyRef:
-              name: basicAuth-treafik-secret
+              name: basicauth-treafik-secret
               key: password
 
 ---
