@@ -113,13 +113,21 @@ kind: Service
 metadata:
   name: vote-service
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
 spec:
   type: ClusterIP
   ports:
-  - port: 80
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  - name: https
+    port: 443
+    protocol: TCP
+    targetPort: 80
   selector:
     app: az-votingapp
+
 
 ---
 # PV Claim creation
