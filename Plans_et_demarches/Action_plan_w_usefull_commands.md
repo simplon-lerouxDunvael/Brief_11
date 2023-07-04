@@ -85,7 +85,7 @@ After checking my deployments `kubectl get deployments -n dev`, I noticed that t
 
 ![2023-07-04 10h20_error_message_unvalid_secret_name](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/cfe54fb2-5bcf-4939-94b8-4c9a0163cb39)
 
-Then I deleted all the deployments, services, secrets, pods and persistent volumes to redeploy everything.
+Then I deleted my cluster and RG and redeployed everything.
 
 [&#8679;](#top)
 
