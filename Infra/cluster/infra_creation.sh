@@ -123,34 +123,31 @@ kubectl create role access-secrets --verb=get,list,watch,update,create --resourc
 kubectl create rolebinding --role=access-secrets default-to-secrets --serviceaccount=cert-manager:cert-manager-webhook-gandi-$hookID -n dev
 echo "Role and rolebinding created."
 
-# # Apply Certificate layer
-# echo "Applying Certificate configuration files..."
-# kubectl apply -f certif_qua.yaml -n qua
-# kubectl apply -f certif_prod.yaml -n prod
-# echo "Certificate configuration files applied."
+# Apply Certificate layer
+echo "Applying Certificate configuration files..."
+kubectl apply -f certif_dev.yaml -n dev
+echo "Certificate configuration file applied."
 
-# # Apply Ingress layer
-# echo "Applying Ingress configuration files..."
-# kubectl apply -f ingress_qua2.yaml -n qua
-# kubectl apply -f ingress_prod2.yaml -n prod
-# echo "Ingress configuration files applied."
+# Apply Ingress layer
+echo "Applying Ingress configuration files..."
+kubectl apply -f ingress_dev2.yaml -n dev
+echo "Ingress configuration file applied."
 
-# # Waiting for certificates
-# echo "Let's take 2' to let certificates to be presented..."
-# sleep 120s
-# echo "Alright, let's steam ahead !"
+# Waiting for certificates
+echo "Let's take 2' to let certificates to be presented..."
+sleep 120s
+echo "Alright, let's steam ahead !"
 
-# # Creating Kubeconfig for Azure Devops
-# echo "Creating the Kubeconfig for Azure DevOps..."
-# az aks get-credentials --resource-group $rgname --name $aksname -f kubeconfig.yaml
-# echo "Kubeconfig file generated."
+# Creating Kubeconfig for Azure Devops
+echo "Creating the Kubeconfig for Azure DevOps..."
+az aks get-credentials --resource-group $rgname --name $aksname -f kubeconfig.yaml
+echo "Kubeconfig file generated. Do not forget to download the kubeconfig.yaml file to get the data and remove it if it is created in your git."
 
-# # Check certificate
-# echo "Let's check our certificates"
-# kubectl get certificate --all-namespaces
+# Check certificate
+echo "Let's check our certificates"
+kubectl get certificate --all-namespaces
 
-# # Check ingresses
-# echo "Let's check our ingresses"
-# kubectl get ing --all-namespaces
-# echo ""
-# echo "Be sure to get the data from kubeconfig.yaml and remove it if it is created in your git."
+# Check ingresses
+echo "Let's check our ingresses"
+kubectl get ing --all-namespaces
+echo "Congrats !"
