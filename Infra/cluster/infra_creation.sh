@@ -102,7 +102,7 @@ echo "cert-manager-webhook-gandi Helm chart installed."
 
 # Apply Ingress layer
 echo "Applying Ingress configuration files..."
-kubectl apply -f ingress_dev1.yaml -n qua
+kubectl apply -f ingress_dev1.yaml -n dev
 echo "Ingress configuration file applied."
 
 # Apply Issuer layer
