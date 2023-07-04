@@ -6,7 +6,9 @@ metadata:
 spec:
   acme:
     # The ACME server URL
-    server: https://acme-v02.api.letsencrypt.org/directory  # https://acme-staging-v02.api.letsencrypt.org/directory
+    server: https://acme-staging-v02.api.letsencrypt.org/directory 
+    # https://acme-v02.api.letsencrypt.org/directory ORIGINAL
+    # https://acme-staging-v02.api.letsencrypt.org/directory TESTS
     # Email address used for ACME registration
     email: dunvaelleroux@gmail.com
     # Name of a secret used to store the ACME account private key
@@ -21,4 +23,4 @@ spec:
             apiKeySecretRef:
               key: api-token
               name: gandi-credentials
-              namespace: qua
+              namespace: dev
