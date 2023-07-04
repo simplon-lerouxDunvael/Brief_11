@@ -122,8 +122,14 @@ helm upgrade treafik-dev traefik/traefik -n dev -f values.yaml
 
 ![2023-07-04 12h05_treafikconfig_upgraded_with_helm](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/2b249978-c4bb-4f7d-b3a9-3fed3f8b2eee)
 
+Then I checked treafik'services and it had a new external IP address. I updated my DNS record with it.
+
+![2023-07-04 12h08_treafik_externalIP](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/e5017ff2-abd0-4e2b-a028-730c067cbc64)
 
 
+Then I tried to connect. I now have a 404 page error but it seems the issue is no more Treafik's configuration. It is now available externally.
+
+![2023-07-04 12h11_404error](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/df261e01-8dae-40f7-b025-51ba43d3c2a4)
 
 [&#8679;](#top)
 
