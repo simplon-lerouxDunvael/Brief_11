@@ -193,6 +193,32 @@ Then I applied my files in this order :
 * ingress_dev1.yaml
 * azure-vote.yaml
 
+The issue was still there.
+
+After Joffrey's and Luna's help the issue was solved :
+
+I uninstalled and reinstalled traefik with helm : 
+
+```bash
+helm install traefik traefik/traefik -n dev
+kubectl apply --server-side --force-conflicts -k https://github.com/traefik/traefik-helm-chart/traefik/crds/ -n dev
+```
+
+```bash
+curl smoothie-traefik.simplon-duna.space
+```
+
+I changed my ingress class from traefik-dev to traefik only for the reinstallation.
+
+I also installed the software Lens to be able to check my Kubernetes cluster and have more visual details about its services, pods, logs, network connections and configurations.
+
+After modifying all this it still did not work for me while it worked for Joffrey and Luna. Same issue after cleaning my cache, on private navigation and on another browser.
+We came to the conclusion that my ISP was blocking the access to `smoothie-traefik.simplon-duna.space`. After updating my wifi card I could finally connect to my application through Traefic.
+
+![2023-07-05 15h41_finally_connected_in_http](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/f6d522af-5829-4225-99b4-5b19486d0e99)
+
+Then I updated my values.yaml file in order to redeploy it and use its config for Traefik instead of the kubernetes traefik-middlewares.yaml file I previsouly had to use.
+
 [&#8679;](#top)
 
 --------
