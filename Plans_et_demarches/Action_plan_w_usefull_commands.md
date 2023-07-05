@@ -219,6 +219,12 @@ We came to the conclusion that my ISP was blocking the access to `smoothie-traef
 
 Then I updated my values.yaml file in order to redeploy it and use its config for Traefik instead of the kubernetes traefik-middlewares.yaml file I previsouly had to use.
 
+Then I redeployed my ingress_dev1.yaml file and updated Traefik with the now updated values.yaml config file :
+
+```bash
+helm upgrade traefik-dev traefik/traefik -n dev -f values.yaml
+```
+
 [&#8679;](#top)
 
 --------
