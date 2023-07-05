@@ -27,4 +27,4 @@ metadata:
 spec:
   ipWhiteList:
     sourceRange:
-      - 20.74.96.2
+      - 78.202.15.42
