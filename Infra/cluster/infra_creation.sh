@@ -56,18 +56,9 @@ echo "Redis database and traefik secrets created."
 echo "Installing traefik Ingress Controller..."
 helm repo add traefik https://helm.traefik.io/traefik
 helm repo update
-helm install $Ingtraefik traefik/traefik -f values.yaml -n dev --debug --set controller.ingressClass="$Ingtraefik"
+helm install $Ingtraefik traefik/traefik -n dev --debug --set controller.ingressClass="$Ingtraefik"
+# helm install $Ingtraefik traefik/traefik -f values.yaml -n dev --debug --set controller.ingressClass="$Ingtraefik"
 echo "Treakif Ingress Controller installed."
-
-# Install Traefik Resource Definitions
-echo "Installing Traefik Resource Definitions..."
-kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.10/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml -n dev
-echo "Traefik Resource Definitions installed."
-
-# Install RBAC for Traefik:
-echo "Installing RBAC for Traefik Resource Definitions..."
-kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.10/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml -n dev
-echo "RBAC for Traefik Resource Definitions installed."
 
 # Break time for traefik to initialize
 echo "Let's take 5 to let traefik settle in..."
@@ -93,6 +84,12 @@ else
     # do nothing
     :
 fi
+
+# Install Traefik middlewares and Traefik config
+echo "Installing Traefik middlewares file and Traefik configuration"
+kubectl apply -f traefik-middlewares.yaml -n dev
+kubectl apply -f ingress_dev1.yaml -n dev
+echo "Traefik middlewares file and Traefik configuration installed."
 
 # # Add Jetstack Helm repository
 # echo "Adding Jetstack Helm repository..."
