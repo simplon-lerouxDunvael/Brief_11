@@ -1,15 +1,15 @@
 # Ingress creation
-apiVersion: traefik.v1alpha1 # traefik.containo.us/v1alpha1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: votingapp
   annotations:
-    traefik.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: traefik-dev
     # cert-manager.io/issuer: letsencrypt
     # cert-manager.io/issuer-kind: Issuer
     # cert-manager.io/issuer-group: cert-manager.io
 spec:
-  ingressClassName: traefik-dev
+  # ingressClassName: traefik-dev
   rules:
   - host: smoothie-traefik.simplon-duna.space
     http:
