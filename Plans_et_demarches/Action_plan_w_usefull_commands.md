@@ -185,10 +185,13 @@ I then updated my traefik config with :
 helm upgrade traefik-dev traefik/traefik -n dev
 ```
 
+I also updated the voting app image used in my azure-vote.yaml with the one in my docker repository.
+
 Then I applied my files in this order :
 
 * traefik-middlewares.yaml
 * ingress_dev1.yaml
+* azure-vote.yaml
 
 [&#8679;](#top)
 
