@@ -147,7 +147,6 @@ Then I updated the voting app service on my azure-vote.yaml file :
 * I added websecure to the annotations (entrypoints)
 * I added the HTTPS ports and the targetport that will be used by Traefik to direct trafic (wheither it is in HTTP or HTTPS). *As I already specified the targetport in the deployment of my azure voting app I do not need to add it.*
 
-
 I still have the 404 error after all these steps.
 
 [&#8679;](#top)
@@ -155,6 +154,14 @@ I still have the 404 error after all these steps.
 <div id=''/>  
 
 ### ****
+
+I decided to deploy the first file ingress_dev1.yaml in order to solve this 404 error.
+
+But when I tried to deploy it I had several error message. They indicated that Kubernetes couldn't find the custom resource definition (CRD) for the IngressRoute kind in the traefik.containo.us/v1 version I had specified in my file. 
+
+![2023-07-05 09h47_crds_installed](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/b3f36a4a-f960-4f63-8531-a4377cd01d46)
+
+So I updated my file with `traefik.v1alpha1` and deployed it. As I had the same error message, I decided to remove `IngressRoute` and just put `Ingress`.
 
 [&#8679;](#top)
 
