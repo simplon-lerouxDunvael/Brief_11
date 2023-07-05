@@ -42,23 +42,42 @@ echo "Creating Redis database secret for namespace dev..."
 kubectl create secret generic redis-secret-traefik --from-literal=username=$redusrtraefik --from-literal=password=$redpasstraefik -n dev
 echo "Redis database secret created."
 
-# # Create traefik authentication secret
-# echo "Creating traefik authentication secret for namespace dev..."
-# kubectl create secret generic basicauth-traefik-secret --from-literal=username=$basicauthuser --from-literal=password=$basicauthpass -n dev
-# echo "traefik authentication secret created."
+# Create traefik authentication secret
+echo "Creating traefik authentication secret for namespace dev..."
+echo -n 'devusertraefik:password_basicauth_648' | base64
+echo "Please recevoer the result to put it in the basic authentication configuration of file values.yaml."
 
-# Create Redis database and traefik secrets
-echo "Creating Redis database and traefik secrets..."
+# Insert a pause in the script so that users can report password to values.yaml
+read -n1 -r -p "Press Y to continue, or N to stop: " key
+
+echo
+
+if [ "$key" = 'Y' ] || [ "$key" = 'y' ]; then
+    echo "Continuing..."
+    # your code to execute if user presses Y goes here
+elif [ "$key" = 'N' ] || [ "$key" = 'n' ]; then
+    echo "Stopping..."
+    exit 1
+else
+    # do nothing
+    :
+fi
+
+# Create Redis database and deploying the Azure voting app
+echo "Creating Redis database secret and deploying the Azure voting app..."
 kubectl apply -f azure-vote.yaml -n dev
-echo "Redis database and traefik secrets created."
+echo "Redis database secret created and Azure voting app deployed."
 
 # Install traefik Ingress Controller
 echo "Installing traefik Ingress Controller..."
 helm repo add traefik https://helm.traefik.io/traefik
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.10/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml
 helm repo update
-helm install $Ingtraefik traefik/traefik -n dev --debug --set controller.ingressClass="$Ingtraefik"
-# helm install $Ingtraefik traefik/traefik -f values.yaml -n dev --debug --set controller.ingressClass="$Ingtraefik"
+helm install $Ingtraefik traefik/traefik -f values.yaml -n dev --debug --set controller.ingressClass="$Ingtraefik"
 echo "Treakif Ingress Controller installed."
+
+helm install traefik traefik/traefik -n dev
+kubectl apply --server-side --force-conflicts -k https://github.com/traefik/traefik-helm-chart/traefik/crds/ -n dev
 
 # Break time for traefik to initialize
 echo "Let's take 5 to let traefik settle in..."
@@ -85,11 +104,10 @@ else
     :
 fi
 
-# Install Traefik middlewares and Traefik config
-echo "Installing Traefik middlewares file and Traefik configuration"
-kubectl apply -f traefik-middlewares.yaml -n dev
+# Install Traefik config
+echo "Installing Traefik configuration"
 kubectl apply -f ingress_dev1.yaml -n dev
-echo "Traefik middlewares file and Traefik configuration installed."
+echo "Traefik Traefik configuration installed."
 
 # # Add Jetstack Helm repository
 # echo "Adding Jetstack Helm repository..."
