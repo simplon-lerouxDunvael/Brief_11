@@ -52,6 +52,7 @@ kind: Service
 metadata:
   name: redis-service
 spec: # Par default le type est ClusterIP, il n'y a aucun raison de le spécifier (type: ClusterIP)
+  type: LoadBalancer
   ports:
   - port: 6379
   selector:
