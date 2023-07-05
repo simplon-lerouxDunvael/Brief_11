@@ -163,6 +163,22 @@ But when I tried to deploy it I had several error message. They indicated that K
 
 So I updated my file with `traefik.v1alpha1` and deployed it. As I had the same error message, I decided to remove `IngressRoute` and just put `Ingress`.
 
+On the [Traefik documentation]() I decided to follow the fill setup that is provided :
+
+To install Traefik CRDs containing the definition of the IngressRoute and the Middleware kinds, and the RBAC authorization resources which will be referenced through the serviceAccountName of the deployment, I used the following commands :
+
+```bash
+# Install Traefik Resource Definitions:
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.10/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml -n dev
+```
+
+```bash
+# Install RBAC for Traefik:
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.10/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml -n dev
+```
+
+Then : 
+
 [&#8679;](#top)
 
 --------
