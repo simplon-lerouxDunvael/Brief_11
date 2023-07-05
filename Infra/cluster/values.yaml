@@ -10,7 +10,8 @@ middlewares:
   my-auth:
     basicAuth:
       users:
-        - "devusertraefik:$apr1$password_basicauth_648$"
+        # - "devusertraefik:$apr1$password_basicauth_648$"
+        - "ZGV2dXNlcnRyYWVmaWs6cGFzc3dvcmRfYmFzaWNhdXRoXzY0OA=="
 
 # Configuration des règles d'IPSource
 routers:
