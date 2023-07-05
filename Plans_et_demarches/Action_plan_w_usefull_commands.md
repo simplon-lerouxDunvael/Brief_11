@@ -222,16 +222,18 @@ Then I updated my values.yaml file in order to redeploy it and use its config fo
 Then I redeployed my ingress_dev1.yaml file and updated Traefik with the now updated values.yaml config file :
 
 ```bash
-helm upgrade traefik-dev traefik/traefik -n dev -f values.yaml
+helm upgrade traefik traefik/traefik -n dev -f values.yaml
 ```
 
 [&#8679;](#top)
 
 --------
 
-<div id=''/>  
+<div id='loom'/>  
 
-### ****
+### **Loom**
+
+After all these steps, I downloaded Loom to be able to records the first and second objectives, then apply the TLS and record a video of its success as well.
 
 [&#8679;](#top)
 
