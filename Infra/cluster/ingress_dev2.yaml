@@ -1,5 +1,5 @@
 # Ingress creation
-apiVersion: traefik.containo.us/v1
+apiVersion: traefik.v1alpha1
 kind: IngressRoute
 metadata:
   name: votingapp
