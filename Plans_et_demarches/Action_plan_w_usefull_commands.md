@@ -163,21 +163,23 @@ But when I tried to deploy it I had several error message. They indicated that K
 
 So I updated my file with `traefik.v1alpha1` and deployed it. As I had the same error message, I decided to remove `IngressRoute` and just put `Ingress`.
 
-On the [Traefik documentation]() I decided to follow the fill setup that is provided :
+As nothing I did was working, I decided to do things differently.
 
-To install Traefik CRDs containing the definition of the IngressRoute and the Middleware kinds, and the RBAC authorization resources which will be referenced through the serviceAccountName of the deployment, I used the following commands :
+I updated my ingress_dev1.yaml file with the same API version and kind used for Nginx but with specific annotations for traefik (found in this [Traefik documentation](https://doc.traefik.io/traefik/middlewares/http/basicauth/)).
+
+![2023-07-05 12h26_ingress_updated](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/e993ba1a-0ec2-4726-b4d1-113a044c541f)
+
+I deleted my basicauth-traefik secret I had created before so I could create an encoded user:password pair that I could put in my basicauthentication middleware. To do so I used the following command :
 
 ```bash
-# Install Traefik Resource Definitions:
-kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.10/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml -n dev
+echo -n 'devusertraefik:password_basicauth_648' | base64
 ```
 
-```bash
-# Install RBAC for Traefik:
-kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.10/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml -n dev
-```
+Then I created a traefik-middlewares.yaml file to deploy the basic authentication for Traefik and the IP whitelisting. I put the encoded password in my secret in data>users.
 
-Then : 
+![2023-07-05 12h31_password-encoded](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/428836d0-a11b-4599-95a6-8acbfc4f5c05)
+
+I then updated my traefik config with : 
 
 [&#8679;](#top)
 
