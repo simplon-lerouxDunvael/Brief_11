@@ -6,12 +6,11 @@ aksname="AKSClusterDuna"
 rgloc="francecentral"
 redusrtraefik="devusertraefik"
 redpasstraefik="password_redis_519"
-basicauthuser="devusertraefik"
-basicauthpass="password_basicauth_648"
+# basicauthuser="devusertraefik"
+# basicauthpass="password_basicauth_648"
 apitoken="xKAj86qFn5Tj6WH5T2rENi4B"
 certvers="v1.10.1"
 Ingtraefik="traefik-dev"
-
 
 # Create resource group
 echo "Creating resource group..."
@@ -43,10 +42,10 @@ echo "Creating Redis database secret for namespace dev..."
 kubectl create secret generic redis-secret-traefik --from-literal=username=$redusrtraefik --from-literal=password=$redpasstraefik -n dev
 echo "Redis database secret created."
 
-# Create traefik authentication secret
-echo "Creating traefik authentication secret for namespace dev..."
-kubectl create secret generic basicauth-traefik-secret --from-literal=username=$basicauthuser --from-literal=password=$basicauthpass -n dev
-echo "traefik authentication secret created."
+# # Create traefik authentication secret
+# echo "Creating traefik authentication secret for namespace dev..."
+# kubectl create secret generic basicauth-traefik-secret --from-literal=username=$basicauthuser --from-literal=password=$basicauthpass -n dev
+# echo "traefik authentication secret created."
 
 # Create Redis database and traefik secrets
 echo "Creating Redis database and traefik secrets..."
