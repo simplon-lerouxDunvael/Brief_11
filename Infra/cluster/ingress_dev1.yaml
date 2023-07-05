@@ -5,17 +5,18 @@ metadata:
   name: votingapp
   annotations:
     kubernetes.io/ingress.class: traefik-dev
+    traefik.ingress.kubernetes.io/middleware: "traefik-basicauth"
+    traefik.ingress.kubernetes.io/router.middleware: "traefik-whitelist"
     # cert-manager.io/issuer: letsencrypt
     # cert-manager.io/issuer-kind: Issuer
     # cert-manager.io/issuer-group: cert-manager.io
 spec:
-  # ingressClassName: traefik-dev
   rules:
   - host: smoothie-traefik.simplon-duna.space
     http:
       paths:
       - path: /
-        pathType: Prefix
+        pathType: Prefixs
         backend:
           service:
             name: vote-service
