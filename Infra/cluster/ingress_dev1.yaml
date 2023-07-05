@@ -1,5 +1,5 @@
 # Ingress creation
-apiVersion: traefik.containo.us/v1alpha1
+apiVersion: traefik.v1alpha1 # traefik.containo.us/v1alpha1
 kind: Ingress
 metadata:
   name: votingapp
