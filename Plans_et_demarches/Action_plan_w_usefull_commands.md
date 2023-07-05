@@ -181,6 +181,15 @@ Then I created a traefik-middlewares.yaml file to deploy the basic authenticatio
 
 I then updated my traefik config with : 
 
+```bash
+helm upgrade traefik-dev traefik/traefik -n dev
+```
+
+Then I applied my files in this order :
+
+* traefik-middlewares.yaml
+* ingress_dev1.yaml
+
 [&#8679;](#top)
 
 --------
