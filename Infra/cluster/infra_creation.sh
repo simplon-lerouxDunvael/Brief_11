@@ -60,6 +60,16 @@ helm repo update
 helm install $Ingtraefik traefik/traefik -f values.yaml -n dev --debug --set controller.ingressClass="$Ingtraefik"
 echo "Treakif Ingress Controller installed."
 
+# Install Traefik Resource Definitions
+echo "Installing Traefik Resource Definitions..."
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.10/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml -n dev
+echo "Traefik Resource Definitions installed."
+
+# Install RBAC for Traefik:
+echo "Installing RBAC for Traefik Resource Definitions..."
+kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.10/docs/content/reference/dynamic-configuration/kubernetes-crd-rbac.yml -n dev
+echo "RBAC for Traefik Resource Definitions installed."
+
 # Break time for traefik to initialize
 echo "Let's take 5 to let traefik settle in..."
 sleep 30s
