@@ -10,11 +10,11 @@
 
 ###### [01 -  Doc reading](#Doc)
 
-###### [02 - Creation of a resource group](#RG)
+###### [02 - Creation of a resource group and deployment of Voting-App](#RG)
 
-###### [03 - ](#)
+###### [03 - Issues and resolution](#issues)
 
-###### [04 - ](#)
+###### [04 - TLS](#tls)
 
 ###### [05 - ](#)
 
@@ -151,9 +151,9 @@ I still have the 404 error after all these steps.
 
 [&#8679;](#top)
 
-<div id=''/>  
+<div id='issues'/>  
 
-### ****
+### **Issues and resolution**
 
 I decided to deploy the first file ingress_dev1.yaml in order to solve this 404 error.
 
@@ -250,27 +250,59 @@ When the prompted screen is exited this error message is displayed to the user :
 
 ![2023-07-06 13h49_unauthorized](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/b80897ac-741c-4b6c-9ddd-2768ec763c1c)
 
+Once this was completed, I added an ip range to my whitelist middleware and applied the traefik-middlewares.yaml file once again. Then I tried to connectand had no issue. I asked Luna to connect (she is at home) and she had a forbidden error message. My ip whitelisting is correctly configured.
+
 [&#8679;](#top)
 
 --------
 
-<div id='loom'/>  
+<div id='tls'/>  
 
-### **Loom**
+### **TLS**
 
 After all these steps, I downloaded Loom to be able to records my objectives.
 
-* [first video](https://www.loom.com/share/cbe0523fd286472995a88be5d810d896?sid=fb407319-ecd5-41aa-ba74-db01e822e0c3)
-* [second video]()
-* [third video]()
+Then I started to integrate TLS certificate so I could connect in HTTPS to my application.
+
+I modified my certif_dev.yaml, issuer-dev.yaml and ingress_dev2.yaml files in order to be able to properly configure my TLS.
+
+I also updated my bash script and ran it to :
+
+* add Jetstack Helm repository
+* install cert-manager with custom DNS settings
+* install cert-manager-webhook-gandi Helm chart
+* apply the Issuer layer
+* create Gandi API token secret
+* create role and rolebinding for accessing secrets
+* apply the certificate layer
+* apply Ingress (traefik) layer
+
+Then I tried to connect in HTTPS to my application and it worked fine. 
+
+![2023-07-06 15h43_https_installed](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/245d945d-af5f-4fce-a679-aaccec0fcf27)
+
+As I added a rule to forbid HTTP trafic (in my ingress_dev2.yaml file) I had an error message when I tried to connect in HTTP to my application.
+
+![2023-07-06 15h59_rule_for_trafic](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/74292a9c-2e54-4648-b886-cacf81807ac8)
+
+![2023-07-06 15h54_http_not_allowed](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/a5e21678-6ce1-478e-aa2e-8d142e2b91ec)
+
+As it worked fine, I changed the acme server on my issuer-dev.yaml file so it would not be the test server (<https://acme-staging-v02.api.letsencrypt.org/directory>) anymore but the original server (<https://acme-v02.api.letsencrypt.org/directory>). This way, my application would truly be in HTTPS.
+
+Then I redeployed my issuer-dev.yaml file and connected in HTTPS to `smoothie-traefik.simplon-duna.space`.
+
 
 [&#8679;](#top)
 
 --------
 
-<div id=''/>  
+<div id='videos'/>  
 
-### ****
+### **Link to videos**
+
+* [first video](https://www.loom.com/share/cbe0523fd286472995a88be5d810d896?sid=fb407319-ecd5-41aa-ba74-db01e822e0c3)
+* [second video](https://www.loom.com/share/4869667fff04452c926936295f899d8c?sid=3d18f8bb-71b4-4446-822d-8f779ba101e3)
+* [third video]()
 
 [&#8679;](#top)
 
