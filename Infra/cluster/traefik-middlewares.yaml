@@ -1,25 +1,26 @@
 # traefik-middlewares.yaml
 
-# Traefik BasicAuth Middleware
-apiVersion: traefik.io/v1alpha1
-kind: Middleware
-metadata:
-  name: basicauth-traefik
-spec:
-  basicAuth:
-    secret: basicauth-secret
-    removeHeader: false
+# # Traefik BasicAuth Middleware
+# apiVersion: traefik.io/v1alpha1
+# kind: Middleware
+# metadata:
+#   name: basicauth-traefik
+# spec:
+#   basicAuth:
+#     secret: basicauth-secret
+#     removeHeader: false
+
+# ---
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: basicauth-secret
+# data:
+#   users:
+#     dGVzdDokYXByMSRZMFVGYXA3UiRRZ0hCS0s3a3hCSFhPTXIuSWlLUUIxCgo=
 
 ---
-apiVersion: v1
-kind: Secret
-metadata:
-  name: basicauth-secret
-data:
-  users:
-    dGVzdDokYXByMSRZMFVGYXA3UiRRZ0hCS0s3a3hCSFhPTXIuSWlLUUIxCgo=
-
----
+# Traefik IP Whitelisting
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
@@ -29,3 +30,17 @@ spec:
     sourceRange:
       - 78.202.15.42
       - 192.168.0.48/24
+
+---
+
+# Traefik OAuth with Google ID
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: oauth-google
+spec:
+  oauth:
+    providers:
+      google:
+        clientID: 21511219386-1gdp9495l6lp3mjdmdvn7mpdgq0vpqe9.apps.googleusercontent.com
+        clientSecret: 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
