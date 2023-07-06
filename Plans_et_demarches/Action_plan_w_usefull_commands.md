@@ -289,8 +289,9 @@ As I added a rule to forbid HTTP trafic (in my ingress_dev2.yaml file) I had an 
 
 As it worked fine, I changed the acme server on my issuer-dev.yaml file so it would not be the test server (<https://acme-staging-v02.api.letsencrypt.org/directory>) anymore but the original server (<https://acme-v02.api.letsencrypt.org/directory>). This way, my application would truly be in HTTPS.
 
-Then I redeployed my issuer-dev.yaml file and connected in HTTPS to `smoothie-traefik.simplon-duna.space`.
+Then I deleted my tls secrets and certificates, the issuer-dev.yaml and certif_dev.yaml files and redeployed my issuer-dev.yaml file and connected in HTTPS to `smoothie-traefik.simplon-duna.space`.
 
+![2023-07-06 16h18_true_https_connection_working](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/5ec42e3b-6e46-4076-ac80-fbb174cd5890)
 
 [&#8679;](#top)
 
