@@ -34,11 +34,14 @@ Objectifs :
 Jeudi 06/07/23  
 Résultats de la veille :
 
-* 
+* Problème 404 résolu
+* Basic auth non fonctionnel avec fichier values
+* Loom installé
 
 Objectifs :
 
-* 
+* Compléter les objectifs 1, 2, 3 et 5 et faire les vidéos
+* Commencer l'objectif 4
 
 Vendredi 07/07/23  
 Résultats de la veille :
