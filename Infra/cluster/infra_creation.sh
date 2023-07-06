@@ -10,7 +10,7 @@ basicauthuser="devusertraefik"
 basicauthpass="password_basicauth_648"
 apitoken="xKAj86qFn5Tj6WH5T2rENi4B"
 certvers="v1.10.1"
-Ingtraefik="traefik-dev"
+Ingtraefik="traefik"
 
 # Create resource group
 echo "Creating resource group..."
@@ -71,14 +71,12 @@ echo "Redis database secret created and Azure voting app deployed."
 
 # Install traefik Ingress Controller
 echo "Installing traefik Ingress Controller..."
-helm repo add traefik https://helm.traefik.io/traefik
-kubectl apply -f https://raw.githubusercontent.com/traefik/traefik/v2.10/docs/content/reference/dynamic-configuration/kubernetes-crd-definition-v1.yml
-helm repo update
-helm install $Ingtraefik traefik/traefik -f values.yaml -n dev --debug --set controller.ingressClass="$Ingtraefik"
-echo "Treakif Ingress Controller installed."
-
-helm install traefik traefik/traefik -n dev
+# helm repo add traefik https://helm.traefik.io/traefik
+# helm repo update
+# helm install $Ingtraefik traefik/traefik-n dev --debug --set controller.ingressClass="$Ingtraefik"
+helm install $Ingtraefik traefik/traefik -n dev
 kubectl apply --server-side --force-conflicts -k https://github.com/traefik/traefik-helm-chart/traefik/crds/ -n dev
+echo "Treakif Ingress Controller installed."
 
 # Break time for traefik to initialize
 echo "Let's take 5 to let traefik settle in..."
@@ -107,6 +105,7 @@ fi
 
 # Install Traefik config
 echo "Installing Traefik configuration"
+kubectl apply -f traefik-middlewares.yaml -n dev
 kubectl apply -f ingress_dev1.yaml -n dev
 echo "Traefik Traefik configuration installed."
 
