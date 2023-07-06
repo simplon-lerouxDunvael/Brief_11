@@ -2,6 +2,13 @@ ports:
   web:
     expose: true
 
+additionalArguments:
+  - "--providers.kubernetescrd"
+
+providers:
+  kubernetesCRD:
+    ingressClass: traefik
+
 service:
   annotations:
     service.beta.kubernetes.io/azure-load-balancer-internal: "false" # For internal load balancer (optional)
