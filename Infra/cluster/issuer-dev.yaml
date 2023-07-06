@@ -6,7 +6,7 @@ metadata:
 spec:
   acme:
     # The ACME server URL
-    server: https://acme-staging-v02.api.letsencrypt.org/directory 
+    server: https://acme-v02.api.letsencrypt.org/directory 
     # https://acme-v02.api.letsencrypt.org/directory ORIGINAL
     # https://acme-staging-v02.api.letsencrypt.org/directory TESTS
     # Email address used for ACME registration
