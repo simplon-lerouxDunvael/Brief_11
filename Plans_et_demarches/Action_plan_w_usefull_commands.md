@@ -297,6 +297,55 @@ Then I deleted my tls secrets and certificates, the issuer-dev.yaml and certif_d
 
 --------
 
+<div id=''/>  
+
+### **Google authentication**
+
+In order to complete the fifth objective and activate OAuth with Google
+ID, I had to follow several steps :
+
+Step 1: I had to setup my Google Developer Account 
+
+* I went to the [Google Developers Console](https://console.developers.google.com) (I created a new project as I did not have one)
+
+![2023-07-06 16h29_google_console](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/00598793-4880-4afa-8d52-a50ba9a44f2d)
+
+![2023-07-06 16h38_project_creation](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/bda47011-8999-4d37-8fdb-1f419f5d5f91)
+
+
+* In the project, I accessed to the "Identifiers" tab in the left menu
+
+![2023-07-06 16h43_creation_of_project](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/16775d91-6dea-48a4-9468-7d5658d51ea2)
+
+* Then I clicked on "Create credentials" and chose "OAuth client identifier"
+
+![2023-07-06 16h50_oauth_creation](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/d38d07ab-c92a-4c11-8389-6aa8a92ab7e9)
+
+* I selected the appropriate application type ("Web application")
+* In the "Authorized JavaScript origins" and "Authorized redirect URIs" section, I added the appropriate URLs for my Traefik application
+* Then I copied the "Client ID" (21511219386-1gdp9495l6lp3mjdmdvn7mpdgq0vpqe9.apps.googleusercontent.com)and the "Client Secret" (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) (necessary for the configuration of Traefik)
+
+![2023-07-06 16h53_oauth_created_successfuly](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/1605f595-97f4-4711-a3ae-add93adcef41)
+
+Step 2 : I created a traefik-middlewares2.yaml file with the OAuth of Google
+
+* I created a traefik-middlewares2.yaml file and I added the middleware for OAuth and added my client ID and secret ID (previously created and saved)
+* I deleted the traefik-middlewares.yaml file with `kubectl delete -f traefik-middlewares.yaml -n dev`
+* I deployed the traefik-middlewares2.yaml file
+
+![2023-07-06 16h59_middleware_file_updated_with_oauth](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/198ad650-87bb-4139-8ab5-6abc1b4a0553)
+
+Step 3 : I created an ingress_dev3.yaml file that I could push for the OAuth authentication
+
+* I created an ingress_dev3.yaml file with the proper annotations
+* I deleted the ingress_dev2.yaml file with `kubectl delete -f ingress_dev2.yaml -n dev`
+* I deployed the ingress_dev3.yaml file
+
+
+[&#8679;](#top)
+
+--------
+
 <div id='videos'/>  
 
 ### **Link to videos**
@@ -312,6 +361,8 @@ Then I deleted my tls secrets and certificates, the issuer-dev.yaml and certif_d
 <div id=''/>  
 
 ### ****
+
+
 
 [&#8679;](#top)
 
