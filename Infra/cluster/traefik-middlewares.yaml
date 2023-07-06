@@ -20,11 +20,12 @@ data:
     dGVzdDokYXByMSRZMFVGYXA3UiRRZ0hCS0s3a3hCSFhPTXIuSWlLUUIxCgo=
 
 ---
-# apiVersion: traefik.io/v1alpha1
-# kind: Middleware
-# metadata:
-#   name: whitelist
-# spec:
-#   ipWhiteList:
-#     sourceRange:
-#       - 78.202.15.42
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: whitelist
+spec:
+  ipWhiteList:
+    sourceRange:
+      - 78.202.15.42
+      - 192.168.0.48/24
