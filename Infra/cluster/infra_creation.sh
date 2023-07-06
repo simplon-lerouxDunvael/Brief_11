@@ -84,7 +84,7 @@ sleep 30s
 echo "Alright, let's steam ahead !"
 
 # Extract External IP address
-DevIngIP=$(kubectl get svc traefik-dev -n dev -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
+DevIngIP=$(kubectl get svc traefik -n dev -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')
 echo "traefik (dev) Ingress: $DevIngIP"
 
 # Insert a pause in the script so that users can report IP to DNS
