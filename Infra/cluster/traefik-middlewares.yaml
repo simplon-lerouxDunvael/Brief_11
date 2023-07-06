@@ -17,7 +17,7 @@ metadata:
   name: basicauth-secret
 data:
   users:
-    ZGV2dXNlcnRyYWVmaWs6cGFzc3dvcmRfYmFzaWNhdXRoXzY0OA==
+    dGVzdDokYXByMSRZMFVGYXA3UiRRZ0hCS0s3a3hCSFhPTXIuSWlLUUIxCgo=
 
 ---
 apiVersion: traefik.io/v1alpha1
