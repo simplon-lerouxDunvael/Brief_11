@@ -242,6 +242,14 @@ kubectl patch svc traefik -p '{"spec":{"externalTrafficPolicy":"Local"}}' -n dev
 
 After configuring the middleware and linking it to my ingress_dev1.yaml file (with the right namespaces), I could finally connect to my application and being prompted for username and password. I commented my whitelist middleware as it seems to not be working yet.
 
+Message prompted to the user during connection to the application :
+
+![2023-07-06 13h49_prompting_screen_working](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/e8663a9d-76b5-4472-9642-ac03da7b033d)
+
+When the prompted screen is exited this error message is displayed to the user :
+
+![2023-07-06 13h49_unauthorized](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/b80897ac-741c-4b6c-9ddd-2768ec763c1c)
+
 [&#8679;](#top)
 
 --------
