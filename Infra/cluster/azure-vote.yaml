@@ -95,16 +95,16 @@ spec:
             secretKeyRef:
               name: redis-secret-traefik
               key: password
-        # - name: BASIC_AUTH_USER
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: basicauth-traefik-secret
-        #       key: username
-        # - name: BASIC_AUTH_PASS
-        #   valueFrom:
-        #     secretKeyRef:
-        #       name: basicauth-traefik-secret
-        #       key: password
+        - name: BASIC_AUTH_USER
+          valueFrom:
+            secretKeyRef:
+              name: basicauth-traefik-secret
+              key: username
+        - name: BASIC_AUTH_PASS
+          valueFrom:
+            secretKeyRef:
+              name: basicauth-traefik-secret
+              key: password
 
 ---
 # App Service
