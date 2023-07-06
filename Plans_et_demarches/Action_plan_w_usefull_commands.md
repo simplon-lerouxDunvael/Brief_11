@@ -225,6 +225,23 @@ Then I redeployed my ingress_dev1.yaml file and updated Traefik with the now upd
 helm upgrade traefik traefik/traefik -n dev -f values.yaml
 ```
 
+I had several other issues. So I decided to redeploy completly my cluster and use middlewares instead of the values.yaml file that did not work properly.
+
+To configure my basicauth middleware I had to create an encoded password. However the command I previsouly used was not correct for this middleware. So, in orderto gain some time, Joffrey created an encoded password for me :
+
+```bash
+htpasswd -nb test test | base64
+```
+
+I put the output in my middleware basicauth. *I will have to install apache2-utils on WSL for next time to avoid issues such as this one.*
+I also ran the following command so that my ip address would not be modified (as a local ip address) and so I would not be denied access to the application: 
+
+```bash
+kubectl patch svc traefik -p '{"spec":{"externalTrafficPolicy":"Local"}}' -n dev
+```
+
+After configuring the middleware and linking it to my ingress_dev1.yaml file (with the right namespaces), I could finally connect to my application and being prompted for username and password. I commented my whitelist middleware as it seems to not be working yet.
+
 [&#8679;](#top)
 
 --------
