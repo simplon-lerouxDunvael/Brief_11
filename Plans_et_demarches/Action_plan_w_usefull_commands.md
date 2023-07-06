@@ -303,7 +303,7 @@ Then I deleted my tls secrets and certificates, the issuer-dev.yaml and certif_d
 
 * [first video](https://www.loom.com/share/cbe0523fd286472995a88be5d810d896?sid=fb407319-ecd5-41aa-ba74-db01e822e0c3)
 * [second video](https://www.loom.com/share/4869667fff04452c926936295f899d8c?sid=3d18f8bb-71b4-4446-822d-8f779ba101e3)
-* [third video]()
+* [third video](https://www.loom.com/share/4b430498574647ff9cce2ee8e5684aec?sid=98255a3a-1203-4479-94a2-01c4515ac583)
 
 [&#8679;](#top)
 
