@@ -5,7 +5,7 @@ metadata:
   name: votingapp
   annotations:
     kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/router.middlewares: dev-basicauth-traefik@kubernetescrd,dev-whitelist@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: dev-basicauth-traefik@kubernetescrd #,dev-whitelist@kubernetescrd
     # cert-manager.io/issuer: letsencrypt
     # cert-manager.io/issuer-kind: Issuer
     # cert-manager.io/issuer-group: cert-manager.io
