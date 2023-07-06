@@ -10,13 +10,12 @@ middlewares:
   my-auth:
     basicAuth:
       users:
-        # - "devusertraefik:$apr1$password_basicauth_648$"
-        - "ZGV2dXNlcnRyYWVmaWs6cGFzc3dvcmRfYmFzaWNhdXRoXzY0OA=="
+        - "ZGV2dXNlcnRyYWVmaWs6cGFzc3dvcmRfYmFzaWNhdXRoXzY0OA==" # - "devusertraefik:$apr1$password_basicauth_648$"
 
 # Configuration des règles d'IPSource
 routers:
   my-router:
-    rule: "Host(`smoothie-traefik.simplon-duna.space`) || (HostRegexp(`smoothie-traefik.simplon-duna.space`, `{subdomain:[a-z]+}.smoothie-traefik.simplon-duna.space`) && IPWhiteList())" #`192.168.1.0/24`, `10.0.0.0/8` `78.202.15.42`
+    rule: "Host(`smoothie-traefik.simplon-duna.space`) || (HostRegexp(`smoothie-traefik.simplon-duna.space`, `{subdomain:[a-z]+}.smoothie-traefik.simplon-duna.space`) && IPWhiteList(`88.175.71.99`))" #`192.168.1.0/24`, `10.0.0.0/8`, `78.202.15.42`
     middlewares:
       - name: my-auth
     service: vote-service # Le nom du service de la voting-app
