@@ -6,8 +6,8 @@ aksname="AKSClusterDuna"
 rgloc="francecentral"
 redusrtraefik="devusertraefik"
 redpasstraefik="password_redis_519"
-basicauthuser="devusertraefik"
-basicauthpass="password_basicauth_648"
+# basicauthuser="devusertraefik"
+# basicauthpass="password_basicauth_648"
 apitoken="xKAj86qFn5Tj6WH5T2rENi4B"
 certvers="v1.10.1"
 Ingtraefik="traefik"
@@ -71,12 +71,12 @@ echo "Redis database secret created and Azure voting app deployed."
 
 # Install traefik Ingress Controller
 echo "Installing traefik Ingress Controller..."
-# helm repo add traefik https://helm.traefik.io/traefik
-# helm repo update
+helm repo add traefik https://helm.traefik.io/traefik
+helm repo update
 # helm install $Ingtraefik traefik/traefik-n dev --debug --set controller.ingressClass="$Ingtraefik"
 helm install $Ingtraefik traefik/traefik -n dev
 kubectl apply --server-side --force-conflicts -k https://github.com/traefik/traefik-helm-chart/traefik/crds/ -n dev
-echo "Treakif Ingress Controller installed."
+echo "Traekif Ingress Controller installed."
 
 # Break time for traefik to initialize
 echo "Let's take 5 to let traefik settle in..."
@@ -107,7 +107,7 @@ fi
 echo "Installing Traefik configuration"
 kubectl apply -f traefik-middlewares.yaml -n dev
 kubectl apply -f ingress_dev1.yaml -n dev
-echo "Traefik Traefik configuration installed."
+echo "Traefik configuration installed."
 
 # # Add Jetstack Helm repository
 # echo "Adding Jetstack Helm repository..."
