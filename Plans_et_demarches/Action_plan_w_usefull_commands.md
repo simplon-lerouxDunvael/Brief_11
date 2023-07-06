@@ -233,7 +233,7 @@ To configure my basicauth middleware I had to create an encoded password. Howeve
 htpasswd -nb test test | base64
 ```
 
-I put the output in my middleware basicauth. *I will have to install apache2-utils on WSL for next time to avoid issues such as this one.*
+I put the output in my middleware basicauth. *I will have to install apache2-utils on [WSL](https://learn.microsoft.com/fr-fr/windows/wsl/install-manual) for next time to avoid issues such as this one.*
 I also ran the following command so that my ip address would not be modified (as a local ip address) and so I would not be denied access to the application: 
 
 ```bash
@@ -250,7 +250,11 @@ After configuring the middleware and linking it to my ingress_dev1.yaml file (wi
 
 ### **Loom**
 
-After all these steps, I downloaded Loom to be able to records the first and second objectives, then apply the TLS and record a video of its success as well.
+After all these steps, I downloaded Loom to be able to records my objectives.
+
+* [first video](https://www.loom.com/share/cbe0523fd286472995a88be5d810d896?sid=fb407319-ecd5-41aa-ba74-db01e822e0c3)
+* [second video]()
+* [third video]()
 
 [&#8679;](#top)
 
