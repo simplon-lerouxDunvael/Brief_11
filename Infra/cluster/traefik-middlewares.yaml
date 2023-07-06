@@ -4,17 +4,17 @@
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
-  name: basicauth-traefik-secret
+  name: basicauth-traefik
 spec:
   basicAuth:
-    secret: basicauth-traefik-secret
+    secret: basicauth-secret
     removeHeader: false
 
 ---
 apiVersion: v1
 kind: Secret
 metadata:
-  name: basicauth-traefik-secret
+  name: basicauth-secret
 data:
   users:
     ZGV2dXNlcnRyYWVmaWs6cGFzc3dvcmRfYmFzaWNhdXRoXzY0OA==
@@ -23,7 +23,7 @@ data:
 # apiVersion: traefik.io/v1alpha1
 # kind: Middleware
 # metadata:
-#   name: traefik-whitelist
+#   name: whitelist
 # spec:
 #   ipWhiteList:
 #     sourceRange:
