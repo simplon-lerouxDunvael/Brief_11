@@ -1,6 +1,7 @@
 ports:
   web:
     expose: true
+
 service:
   annotations:
     service.beta.kubernetes.io/azure-load-balancer-internal: "false" # For internal load balancer (optional)
@@ -33,8 +34,8 @@ http:
 
 # Permet de rediriger le trafic HTTP vers HTTPS une fois le TLS mis en place
 # Routeur "whoami-https" pour se connecter en HTTPS
-    whoami-https:
-      rule: "Host(`smoothie-traefik.simplon-duna.space`)"
-      service: vote-service # Remplacer par le nom du service approprié
-      entryPoints:
-        - websecure # Utiliser l'entrypoint websecure pour HTTPS
+  whoami-https:
+    rule: "Host(`smoothie-traefik.simplon-duna.space`)"
+    service: vote-service # Remplacer par le nom du service approprié
+    entryPoints:
+      - websecure # Utiliser l'entrypoint websecure pour HTTPS
