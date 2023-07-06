@@ -40,7 +40,7 @@ echo "Namespaces created"
 # Create Redis database secret
 echo "Creating Redis database and Traefic secrets for namespace dev..."
 kubectl create secret generic redis-secret-traefik --from-literal=username=$redusrtraefik --from-literal=password=$redpasstraefik -n dev
-kubectl create secret generic basicauth-traefik-secret --from-literal=username=$basicauthuser --from-literal=password=$basicauthpass -n dev
+# kubectl create secret generic basicauth-traefik-secret --from-literal=username=$basicauthuser --from-literal=password=$basicauthpass -n dev
 echo "Redis database and Traefik secrets created."
 
 # Create traefik authentication secret
