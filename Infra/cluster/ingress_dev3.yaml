@@ -1,58 +1,109 @@
-# Ingress creation
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+# # Ingress creation
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: votingapp
+#   annotations:
+#     kubernetes.io/ingress.class: traefik
+#     traefik.ingress.kubernetes.io/router.middlewares: dev-sso@kubernetescrd,dev-whitelist@kubernetescrd
+#     traefik.ingress.kubernetes.io/router.entrypoints: websecure # Ligne pour spécifier l'entrée HTTPS
+#     cert-manager.io/issuer: letsencrypt
+#     cert-manager.io/issuer-kind: Issuer
+#     cert-manager.io/issuer-group: cert-manager.io
+# spec:
+#   rules:
+#   - host: smoothie-traefik.simplon-duna.space
+#     http:
+#       paths:
+#       - path: /
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: vote-service
+#             port: 
+#               number: 80
+#   - host: smoothie-traefik.simplon-duna.space
+#     http:
+#       paths:
+#       - path: /_oauth
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: proxy-google-oauth
+#             port: 
+#               number: 8080
+#   - host: smoothie-traefik.simplon-duna.space
+#     http:
+#       paths:
+#       - path: /checkauth
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: proxy-google-oauth
+#             port: 
+#               number: 8080
+#   - host: smoothie-traefik.simplon-duna.space
+#     http:
+#       paths:
+#       - path: /oauth2callback
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: proxy-google-oauth
+#             port: 
+#               number: 8080
+#   tls: # placing a host in the TLS config will determine what ends up in the cert's subjectAlt
+#   - hosts:
+#     - smoothie-traefik.simplon-duna.space
+#     secretName: secret-tls # cert-manager will store the created certificate in this secret.
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
 metadata:
-  name: votingapp
-  annotations:
-    kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/router.middlewares: dev-sso@kubernetescrd,dev-whitelist@kubernetescrd
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure # Ligne pour spécifier l'entrée HTTPS
-    cert-manager.io/issuer: letsencrypt
-    cert-manager.io/issuer-kind: Issuer
-    cert-manager.io/issuer-group: cert-manager.io
+  name: votingapp-tls
+  namespace: dev
 spec:
-  rules:
-  - host: smoothie-traefik.simplon-duna.space
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: vote-service
-            port: 
-              number: 80
-  - host: smoothie-traefik.simplon-duna.space
-    http:
-      paths:
-      - path: /_oauth
-        pathType: Prefix
-        backend:
-          service:
-            name: proxy-google-oauth
-            port: 
-              number: 8080
-  - host: smoothie-traefik.simplon-duna.space
-    http:
-      paths:
-      - path: /checkauth
-        pathType: Prefix
-        backend:
-          service:
-            name: proxy-google-oauth
-            port: 
-              number: 8080
-  - host: smoothie-traefik.simplon-duna.space
-    http:
-      paths:
-      - path: /oauth2callback
-        pathType: Prefix
-        backend:
-          service:
-            name: proxy-google-oauth
-            port: 
-              number: 8080
-  tls: # placing a host in the TLS config will determine what ends up in the cert's subjectAlt
-  - hosts:
-    - smoothie-traefik.simplon-duna.space
-    secretName: secret-tls # cert-manager will store the created certificate in this secret.
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`smoothie-traefik.simplon-duna.space`)
+    kind: Rule
+    services:
+    - name: vote-service 
+      port: 80
+    middlewares:
+        #- name: basicauth-middleware
+        - name: sso
+        - name: whitelist
+  tls:
+    secretName: secret-tls
+    #options:
+      #name: mtls-option
+
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: proxy-google-oauth
+spec:
+  entryPoints:
+    - websecure
+  routes:
+  - match: Host(`smoothie-traefik.simplon-duna.space`) && Path(`/_oauth`)
+    kind: Rule
+    services:
+    - name: proxy-google-oauth
+      port: 8080
+  - match: Host(`smoothie-traefik.simplon-duna.space`) && Path(`/checkauth`)
+    kind: Rule
+    services:
+    - name: proxy-google-oauth
+      port: 8080
+  - match: Host(`smoothie-traefik.simplon-duna.space`) && Path(`/oauth2callback`)
+    kind: Rule
+    services:
+    - name: proxy-google-oauth
+      port: 8080
+  tls:
+    secretName: secret-tls
