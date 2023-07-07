@@ -39,7 +39,7 @@ spec:
         - name: COOKIE_DOMAIN
           value: smoothie-traefik.simplon-duna.space
         - name: AUTH_HOST
-          value: auth.smoothie-traefik.simplon-duna.space
+          value: smoothie-traefik.simplon-duna.space
         - name: INSECURE_COOKIE
           value: "false"
         - name: URL_PATH 
