@@ -1,65 +1,52 @@
-# sso-traefik.yaml
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: traefik-sso
+  name: proxy-google-oauth
   labels:
-    app: traefik-sso
+    app: proxy-google-oauth
 spec:
   selector:
     matchLabels:
-      app: traefik-sso
+      app: proxy-google-oauth
   template:
     metadata:
       labels:
-        name: traefik-sso
-        app: traefik-sso
+        app: proxy-google-oauth
     spec:
       containers:
-      - name: traefik-sso
-        image: thomseddon/traefik-forward-auth:2
+      - name: proxy-google-oauth
+        image: bquentin19/simplon:latest
         imagePullPolicy: Always
         env:
-        - name: PROVIDERS_GOOGLE_CLIENT_ID
+        - name: CLIENT_ID
           valueFrom:
             secretKeyRef:
-              name: traefik-sso
+              name: traefik-sso 
               key: clientid
-        - name: PROVIDERS_GOOGLE_CLIENT_SECRET
+        - name: CLIENT_SECRET
           valueFrom:
             secretKeyRef:
               name: traefik-sso
               key: clientsecret
-        - name: SECRET
-          valueFrom:
-            secretKeyRef:
-              name: traefik-sso
-              key: secret
-        - name: COOKIE_DOMAIN
-          value: smoothie-traefik.simplon-duna.space
-        - name: AUTH_HOST
-          value: smoothie-traefik.simplon-duna.space
-        - name: INSECURE_COOKIE
-          value: "false"
-        - name: URL_PATH 
-          value: /
-        - name: WHITELIST
-          value: dunvaelleroux@gmail.com
-        - name: LOG_LEVEL
-          value: debug
+        - name: FORWARD_AUTH_HEADER
+          value: "Bearer zhjghfzejng"
+        - name: REDIRECT_URI
+          value: https://smoothie-traefik.simplon-duna.space/oauth2callback
+        - name: PORT
+          value: "8080"
         ports:
-        - containerPort: 4181
+        - containerPort: 8080
 
 ---
 kind: Service
 apiVersion: v1
 metadata:
-  name: traefik-sso
+  name: proxy-google-oauth
+
 spec:
   selector:
-    app: traefik-sso
+    app:  proxy-google-oauth
   ports:
   - protocol: TCP
-    port: 4181
-    targetPort: 4181
+    port: 8080
+    targetPort: 8080
