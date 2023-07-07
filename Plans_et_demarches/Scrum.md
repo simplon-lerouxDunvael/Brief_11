@@ -46,9 +46,12 @@ Objectifs :
 Vendredi 07/07/23  
 Résultats de la veille :
 
-* 
+* Objectifs 1, 2 et 3 complétés et vidéos faites (YAY)
+* Objectif 5 bien avancé
 
 Objectifs :
 
-* Faire la présentation
+* Faire la vidéo récapitualtive
+* Terminer l'objectif 5
+* Objectif 4 ?
 
