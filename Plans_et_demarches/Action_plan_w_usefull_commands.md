@@ -341,6 +341,8 @@ Step 3 : I created an ingress_dev3.yaml file that I could push for the OAuth aut
 * I deleted the ingress_dev2.yaml file with `kubectl delete -f ingress_dev2.yaml -n dev`
 * I deployed the ingress_dev3.yaml file
 
+![2023-07-07 10h06_traefik_updated](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/dfeab32a-0379-47c6-81dd-4786a6484482)
+
 
 [&#8679;](#top)
 
