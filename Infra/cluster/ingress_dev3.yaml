@@ -5,13 +5,23 @@ metadata:
   name: votingapp
   annotations:
     kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/router.middlewares: dev-oauth-google@kubernetescrd,dev-whitelist@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: dev-whitelist@kubernetescrd
     traefik.ingress.kubernetes.io/router.entrypoints: websecure # Ligne pour spécifier l'entrée HTTPS
     cert-manager.io/issuer: letsencrypt
     cert-manager.io/issuer-kind: Issuer
     cert-manager.io/issuer-group: cert-manager.io
 spec:
   rules:
+  - host: auth.smoothie-traefik.simplon-duna.space
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: traefik-sso
+            port: 
+              number: 4181 
   - host: smoothie-traefik.simplon-duna.space
     http:
       paths:
