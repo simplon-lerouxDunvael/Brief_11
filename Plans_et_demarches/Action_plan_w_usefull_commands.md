@@ -343,6 +343,14 @@ Step 3 : I created an ingress_dev3.yaml file that I could push for the OAuth aut
 
 ![2023-07-07 10h06_traefik_updated](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/dfeab32a-0379-47c6-81dd-4786a6484482)
 
+As I had a 404 error message, I checked my files (updated one with the namespace but the issue still persists). So I checked my project redirection url in my google and updated it by adding _auth :
+
+![2023-07-07 10h12_redirection_url_updated](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/06d7687e-2fa3-4a41-b74d-7882c9678f27)
+
+In order to have a forwarding from google to my traefik, I had to create a CNAME DNS record.
+
+![2023-07-07 12h04_cname_dnsrecord_created](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/7ba7069a-07cd-4596-8b36-7e48df394bfa)
+
 
 [&#8679;](#top)
 
