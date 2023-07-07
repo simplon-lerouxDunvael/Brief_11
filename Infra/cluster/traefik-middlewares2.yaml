@@ -32,20 +32,6 @@ spec:
       - 192.168.0.48/24
 
 ---
-
-# Traefik OAuth with Google ID
-apiVersion: traefik.io/v1alpha1
-kind: Middleware
-metadata:
-  name: oauth-google
-spec:
-  oauth:
-    providers:
-      google:
-        clientID: 21511219386-1gdp9495l6lp3mjdmdvn7mpdgq0vpqe9.apps.googleusercontent.com
-        clientSecret: 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
-
----
 # Forward Google to Traefik
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
