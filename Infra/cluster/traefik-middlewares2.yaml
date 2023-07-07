@@ -39,7 +39,7 @@ metadata:
   name: sso
 spec:
   forwardAuth:
-    address: https://auth.smoothie-traefik.simplon-duna.space
+    address: http://traefik-sso:4181
     authResponseHeaders: 
         - "X-Forwarded-User"
     trustForwardHeader: true
