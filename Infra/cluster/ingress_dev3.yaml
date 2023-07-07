@@ -90,17 +90,17 @@ spec:
   entryPoints:
     - websecure
   routes:
-  - match: Host(`smoothie-traefik.simplon-duna.space`) && Path(`/_oauth`)
+  - match: Host(`smoothie-traefik.simplon-duna.space`) && Path(`/_oauth`) # To authorize the user
     kind: Rule
     services:
     - name: proxy-google-oauth
       port: 8080
-  - match: Host(`smoothie-traefik.simplon-duna.space`) && Path(`/checkauth`)
+  - match: Host(`smoothie-traefik.simplon-duna.space`) && Path(`/checkauth`) # To rollback the user (when he has been identified) to the home page of the application
     kind: Rule
     services:
     - name: proxy-google-oauth
       port: 8080
-  - match: Host(`smoothie-traefik.simplon-duna.space`) && Path(`/oauth2callback`)
+  - match: Host(`smoothie-traefik.simplon-duna.space`) && Path(`/oauth2callback`) # To sent back to the authorization page if not successful
     kind: Rule
     services:
     - name: proxy-google-oauth
