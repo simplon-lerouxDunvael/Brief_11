@@ -1,12 +1,15 @@
 # sso-traefik.yaml
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: traefik-sso
   labels:
     app: traefik-sso
 spec:
+  selector:
+    matchLabels:
+      app: traefik-sso
   template:
     metadata:
       labels:
