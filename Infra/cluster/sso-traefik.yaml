@@ -42,8 +42,8 @@ spec:
           value: auth.smoothie-traefik.simplon-duna.space
         - name: INSECURE_COOKIE
           value: "false"
-        # - name: URL_PATH 
-        #   value: /_oauth
+        - name: URL_PATH 
+          value: /
         - name: WHITELIST
           value: dunvaelleroux@gmail.com
         - name: LOG_LEVEL
