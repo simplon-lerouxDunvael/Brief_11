@@ -343,14 +343,63 @@ Step 3 : I created an ingress_dev3.yaml file that I could push for the OAuth aut
 
 ![2023-07-07 10h06_traefik_updated](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/dfeab32a-0379-47c6-81dd-4786a6484482)
 
-As I had a 404 error message, I checked my files (updated one with the namespace but the issue still persists). So I checked my project redirection url in my google and updated it by adding _auth :
+As I had a 404 error message, I checked my files (updated one with the namespace but the issue still persists). So I checked my project redirection url in my google console and updated it by adding _auth :
 
 ![2023-07-07 10h12_redirection_url_updated](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/06d7687e-2fa3-4a41-b74d-7882c9678f27)
 
-In order to have a forwarding from google to my traefik, I had to create a CNAME DNS record.
+In order to have a forwarding from google to my traefik, I had to create a DNS record. I tried to follow this [tutorial](https://itnext.io/how-to-implement-a-sso-middleware-for-traefik-v2-on-kubernetes-dcd9d45cc875).
 
-![2023-07-07 12h04_cname_dnsrecord_created](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/7ba7069a-07cd-4596-8b36-7e48df394bfa)
+![2023-07-07 15h53_dns_record_created_googleauth](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/d319c162-f324-40d5-ba24-9cb4381102e1)
 
+As I had issues I asked Quentin for help. We came to the conclusion that the forwarding was not working (just like him) and that I had to use a different method that the "normal" one.
+
+![2023-07-07 14h50_access_refusedgoogle](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/c8c3213b-ae04-46c8-9b68-dc185f0c9e52)
+
+I updated my project redirection url in my google console :
+
+![2023-07-07 10h12_redirection_url_updated](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/be17dac1-6937-4921-9508-262734019cef)
+
+I also created a secret for my google clientID and secretID :
+
+```bash
+kubectl create secret generic traefik-sso --from-literal=clientid=21511219386-1gdp9495l6lp3mjdmdvn7mpdgq0vpqe9.apps.googleusercontent.com --from-literal=clientsecret=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 --from-literal=secret=1234567890 -n dev
+```
+
+Then I updated my traefik-middlewares2.yaml file with the forwarding authentication and my address `https://smoothie-traefik.simplon-duna.space/checkauth` :
+
+![2023-07-07 15h58_middlewares_updated](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/a4ec3413-de85-4be3-83ea-dd439884c61f)
+
+Then I updated my ingress_dev3.yaml file. I commented everything and added IngressRoutes, the references to my middlewares and the host with the different needed paths for the google authorization to work properly :
+
+![2023-07-07 16_08_sso-treafik_file_created](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/0d27f4ba-a67e-4692-81a7-f9a2a4d600c5)
+
+Finally I created a sso-traefik.yaml file that deploys traefik proxy for oauth2 with its service and the proper references to the host, ports, secrets and host paths. The image used is one created by Quentin to be able to bypass the issues linked to the forwarding issues we met :
+
+![2023-07-07 16h07_ingress-dev3_file_updated](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/568b41b8-4acb-4263-8d2f-3a5a905b11fe)
+
+Once this was done i pushed and applied all my files and tried to connect to my application once again and it worked (finally !):
+
+* Chossing an account after entering the application url :
+
+![2023-07-07 16h24_oauth1](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/fc8105b7-d098-4850-a06e-9a8924c6c5e3)
+
+* Entering the password :
+
+![2023-07-07 16h24_oauth2](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/0843c8a7-3201-4f1f-bf34-6f645fe51505)
+
+* Choosing the two authentication method and sending the code :
+
+![2023-07-07 16h26_oauth3](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/f602a49e-6f05-48fb-846a-6da41d77d192)
+
+* Entering the code received on the phone :
+
+![2023-07-07 16h27_oauth4](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/15bd5aa8-b096-4dab-9777-f065711bd466)
+
+* Connected to the application :
+
+![2023-07-07 16h27_oauth5](https://github.com/simplon-lerouxDunvael/Brief_11/assets/108001918/45d3c9d3-6c48-450a-b66e-06b5d92e6529)
+
+I had no time to complete the fourth objective sadly...
 
 [&#8679;](#top)
 
@@ -363,6 +412,8 @@ In order to have a forwarding from google to my traefik, I had to create a CNAME
 * [first video](https://www.loom.com/share/cbe0523fd286472995a88be5d810d896?sid=fb407319-ecd5-41aa-ba74-db01e822e0c3)
 * [second video](https://www.loom.com/share/4869667fff04452c926936295f899d8c?sid=3d18f8bb-71b4-4446-822d-8f779ba101e3)
 * [third video](https://www.loom.com/share/4b430498574647ff9cce2ee8e5684aec?sid=98255a3a-1203-4479-94a2-01c4515ac583)
+* [fourth video](https://www.loom.com/share/9a9a0a24e1364dd6832c69749b640382?sid=4c20e655-5e59-4703-8d02-ea567ce4c3ef)
+* [fifth video]()
 
 [&#8679;](#top)
 
