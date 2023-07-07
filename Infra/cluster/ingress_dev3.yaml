@@ -22,6 +22,36 @@ spec:
             name: vote-service
             port: 
               number: 80
+  - host: smoothie-traefik.simplon-duna.space
+    http:
+      paths:
+      - path: /_oauth
+        pathType: Prefix
+        backend:
+          service:
+            name: proxy-google-oauth
+            port: 
+              number: 8080
+  - host: smoothie-traefik.simplon-duna.space
+    http:
+      paths:
+      - path: /checkauth
+        pathType: Prefix
+        backend:
+          service:
+            name: proxy-google-oauth
+            port: 
+              number: 8080
+  - host: smoothie-traefik.simplon-duna.space
+    http:
+      paths:
+      - path: /oauth2callback
+        pathType: Prefix
+        backend:
+          service:
+            name: proxy-google-oauth
+            port: 
+              number: 8080
   tls: # placing a host in the TLS config will determine what ends up in the cert's subjectAlt
   - hosts:
     - smoothie-traefik.simplon-duna.space
