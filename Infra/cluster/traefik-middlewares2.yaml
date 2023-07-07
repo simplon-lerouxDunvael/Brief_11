@@ -39,7 +39,7 @@ metadata:
   name: sso
 spec:
   forwardAuth:
-    address: http://traefik-sso:4181
+    address: http://traefik-sso.dev.svc.cluster.local:4181
     authResponseHeaders: 
         - "X-Forwarded-User"
     trustForwardHeader: true
